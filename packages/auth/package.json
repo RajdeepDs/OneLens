@@ -1,0 +1,24 @@
+{
+  "name": "@onelens/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@onelens/db": "workspace:*",
+    "@onelens/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@onelens/config": "workspace:*",
+    "typescript": "^5"
+  }
+}
