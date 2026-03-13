@@ -91,6 +91,8 @@
     --font-serif: "Instrument Serif", serif;
     --font-mono: "Geist Mono", monospace;
 
+    --header-height: 52px;
+
     --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);

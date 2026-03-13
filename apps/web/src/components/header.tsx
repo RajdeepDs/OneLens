@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@onelens/ui/components/button";
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
 import { WordMark } from "./ui/word-mark";
@@ -11,26 +13,28 @@ export default function Header() {
 	] as const;
 
 	return (
-		<div>
-			<div className="container mx-auto flex flex-row items-center justify-between px-2 py-1">
-				<Link href={"/"}>
-					<WordMark />
-				</Link>
-				<nav className="flex gap-4 text-[13px]">
-					{links.map(({ to, label }) => {
-						return (
-							<Link href={to} key={to}>
-								{label}
-							</Link>
-						);
-					})}
-				</nav>
-				<div className="flex items-center gap-2">
-					<ModeToggle />
-					<UserMenu />
+		<header className="z-50 h-(--header-height) items-stretch">
+			<div className="fixed inset-x-0 top-0 mx-auto flex h-(--header-height) w-full items-center border-b py-3">
+				<div className="mx-auto flex w-full items-center justify-between px-6 sm:max-w-7xl">
+					<Link href={"/"}>
+						<WordMark />
+					</Link>
+					<nav className="hidden gap-4 text-[13px] sm:flex">
+						{links.map(({ to, label }) => {
+							return (
+								<Link href={to} key={to}>
+									{label}
+								</Link>
+							);
+						})}
+					</nav>
+					<div className="flex items-center gap-2">
+						<ModeToggle />
+						<UserMenu />
+						<Button>Join waitlist</Button>
+					</div>
 				</div>
 			</div>
-			<hr />
-		</div>
+		</header>
 	);
 }

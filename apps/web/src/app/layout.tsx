@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "onelens",
-	description: "onelens",
+	title: "OneLens ~ The intelligence layer for pull requests",
+	description: "Fully automated. Zero ceremony. From PR open to merge-ready.",
 };
 
 export default function RootLayout({
