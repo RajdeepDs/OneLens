@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@onelens/ui/components/button";
+import type { Route } from "next";
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
 import { WordMark } from "./ui/word-mark";
@@ -8,8 +9,8 @@ import UserMenu from "./user-menu";
 
 export default function Header() {
 	const links = [
-		{ to: "/", label: "Changelog" },
-		{ to: "/dashboard", label: "Contact" },
+		{ to: "/changelog", label: "Changelog" },
+		{ to: "/contact", label: "Contact" },
 	] as const;
 
 	return (
@@ -22,7 +23,7 @@ export default function Header() {
 					<nav className="hidden gap-4 text-[13px] sm:flex">
 						{links.map(({ to, label }) => {
 							return (
-								<Link href={to} key={to}>
+								<Link href={to as Route} key={to}>
 									{label}
 								</Link>
 							);

@@ -8,7 +8,6 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "**",
       "!**/.next",
       "!**/dist",
       "!**/.turbo",
@@ -26,7 +25,8 @@
       "!**/.svelte-kit",
       "!**/wrangler.jsonc",
       "!**/.source",
-      "!**/convex/_generated"
+      "!**/convex/_generated",
+      "!**/packages/ui"
     ]
   },
   "formatter": {
@@ -47,6 +47,16 @@
       "correctness": {
         "useExhaustiveDependencies": "info"
       },
+      "performance": {
+        "noBarrelFile": "off",
+        "noNamespaceImport": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off"
+      },
+      "suspicious": {
+        "noEmptyInterface": "off"
+      },
       "nursery": {
         "useSortedClasses": {
           "level": "warn",
@@ -66,7 +76,13 @@
         "noUnusedTemplateLiteral": "error",
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
-        "noUselessElse": "error"
+        "noUselessElse": "error",
+        "useConsistentTypeDefinitions": {
+          "options": {
+            "style": "interface"
+          },
+          "level": "error"
+        }
       }
     }
   },
