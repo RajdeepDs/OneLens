@@ -14,7 +14,7 @@ export default function Header() {
 
 	return (
 		<header className="z-50 h-(--header-height) items-stretch">
-			<div className="fixed inset-x-0 top-0 mx-auto flex h-(--header-height) w-full items-center border-b py-3">
+			<div className="fixed inset-x-0 top-0 mx-auto flex h-(--header-height) w-full items-center border-b bg-alpha-1 py-3 backdrop-blur-2xl">
 				<div className="mx-auto flex w-full items-center justify-between px-6 sm:max-w-7xl">
 					<Link href={"/"}>
 						<WordMark />
