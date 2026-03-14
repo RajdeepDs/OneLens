@@ -5,14 +5,14 @@ export default function Home() {
 		<main className="container mx-auto flex flex-col px-6">
 			<div className="mt-32 flex flex-col gap-8 text-balance sm:max-w-lg md:max-w-3xl">
 				<div className="flex items-center text-wrap">
-					<h1 className="font-semibold text-4xl leading-10 tracking-tight md:text-6xl md:leading-13 md:tracking-normal">
+					<h1 className="font-semibold text-4xl leading-10 tracking-tight md:text-[56px] md:leading-13 md:tracking-normal">
 						The PR workflow is broken.{" "}
 						<span className="text-4xl text-gray-11 text-semibold italic md:text-5xl">
 							We&apos;re fixing it.
 						</span>
 					</h1>
 				</div>
-				<p className="text-gray-11 text-md leading-6 tracking-tight md:text-lg md:leading-7">
+				<p className="text-[15px] text-gray-11 leading-6 tracking-tight md:leading-7">
 					Every engineering team spends human effort on work that shouldn't
 					require humans. We're building the product that changes that.
 				</p>
@@ -23,13 +23,13 @@ export default function Home() {
 				</Button>
 			</div>
 
-			<section className="inset-shadow-xs mx-auto mt-25 mb-20 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12">
+			<section className="inset-shadow-xs mx-auto mt-25 mb-20 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12 dark:bg-gray-1">
 				<div className="flex flex-col">
 					<h2 className="font-semibold text-foreground text-lg">
 						Introducing OneLens
 					</h2>
 					<hr className="my-4" />
-					<div className="flex flex-col gap-6 text-gray-11">
+					<div className="flex flex-col gap-6 text-[15px] text-gray-11">
 						<p>
 							Engineering teams spend a significant part of their week not
 							building — preparing to build, waiting to ship, explaining what
@@ -71,7 +71,7 @@ export default function Home() {
 					</div>
 
 					<div className="flex flex-col gap-1 pt-8 text-gray-11 text-sm">
-						<span className="text-base text-foreground">Rajdeep Das</span>
+						<span className="text-base text-foreground">Rajdeep</span>
 						<span className="">Founder, OneLens</span>
 					</div>
 				</div>
