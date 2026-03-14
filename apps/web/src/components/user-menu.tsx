@@ -25,7 +25,9 @@ export default function UserMenu() {
 	if (!session) {
 		return (
 			<Link href="/login">
-				<Button variant="outline">Login</Button>
+				<Button shortcut={"L"} variant="ghost">
+					Login
+				</Button>
 			</Link>
 		);
 	}

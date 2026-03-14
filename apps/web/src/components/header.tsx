@@ -3,7 +3,6 @@
 import { Button } from "@onelens/ui/components/button";
 import type { Route } from "next";
 import Link from "next/link";
-import { ModeToggle } from "./mode-toggle";
 import { WordMark } from "./ui/word-mark";
 import UserMenu from "./user-menu";
 
@@ -30,9 +29,11 @@ export default function Header() {
 						})}
 					</nav>
 					<div className="flex items-center gap-2">
-						<ModeToggle />
+						{/*<ModeToggle />*/}
 						<UserMenu />
-						<Button>Join waitlist</Button>
+						<Button shortcut={"J"} variant={"secondary"}>
+							Join waitlist
+						</Button>
 					</div>
 				</div>
 			</div>
