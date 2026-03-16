@@ -16,10 +16,12 @@ export default function Header() {
 		<header className="z-50 h-(--header-height) items-stretch">
 			<div className="fixed inset-x-0 top-0 mx-auto flex h-(--header-height) w-full items-center border-b bg-gray-1/60 py-3 backdrop-blur-2xl">
 				<div className="mx-auto flex w-full items-center justify-between px-6 sm:max-w-7xl">
-					<Link href={"/"}>
-						<WordMark />
-					</Link>
-					<nav className="hidden gap-4 text-[13px] sm:flex">
+					<div className="flex flex-1 items-center justify-start">
+						<Link href={"/"}>
+							<WordMark />
+						</Link>
+					</div>
+					<nav className="hidden flex-1 justify-center gap-4 text-[13px] sm:flex">
 						{links.map(({ to, label }) => {
 							return (
 								<Link href={to as Route} key={to}>
@@ -28,7 +30,7 @@ export default function Header() {
 							);
 						})}
 					</nav>
-					<div className="flex items-center gap-2">
+					<div className="flex flex-1 items-center justify-end gap-2">
 						{/*<ModeToggle />*/}
 						<UserMenu />
 						<Button shortcut={"J"} variant={"secondary"}>
