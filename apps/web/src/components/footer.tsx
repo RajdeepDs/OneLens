@@ -10,6 +10,14 @@ const FOOTER_LINKS = [
 		],
 	},
 	{
+		title: "Connect",
+		links: [
+			{ label: "X", href: "/" },
+			{ label: "LinkedIn", href: "/" },
+			{ label: "GitHub", href: "/" },
+		],
+	},
+	{
 		title: "Company",
 		links: [
 			{ label: "About Us", href: "/" },
@@ -17,14 +25,6 @@ const FOOTER_LINKS = [
 			{ label: "Blog", href: "/" },
 			{ label: "Privacy", href: "/" },
 			{ label: "Terms of Use", href: "/" },
-		],
-	},
-	{
-		title: "Connect",
-		links: [
-			{ label: "X", href: "/" },
-			{ label: "LinkedIn", href: "/" },
-			{ label: "GitHub", href: "/" },
 		],
 	},
 ] as const;

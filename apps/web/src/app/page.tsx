@@ -14,7 +14,7 @@ export default function Home() {
 							</span>
 						</h1>
 					</div>
-					<p className="text-[15px] text-gray-11 leading-6 tracking-tight md:leading-7">
+					<p className="text-[15px] text-gray-11 leading-6 md:leading-7">
 						Every engineering team spends human effort on work that shouldn't
 						require humans. We're building the product that changes that.
 					</p>
