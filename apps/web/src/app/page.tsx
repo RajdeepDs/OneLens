@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 export default function Home() {
 	return (
 		<main className="flex flex-col">
-			<section className="container mx-auto px-6">
+			<section className="container mx-auto px-6 sm:max-w-7xl">
 				<div className="mt-32 flex flex-col gap-8 text-balance sm:max-w-lg md:max-w-3xl">
 					<div className="flex items-center text-wrap">
 						<h1 className="font-semibold text-4xl leading-10 tracking-tight md:text-[56px] md:leading-13 md:tracking-normal">
