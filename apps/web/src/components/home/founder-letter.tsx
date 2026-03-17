@@ -1,6 +1,16 @@
+import * as motion from "motion/react-client";
+
 export function FounderLetter() {
 	return (
-		<section className="inset-shadow-xs mx-auto my-28 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12 dark:bg-gray-1">
+		<motion.section
+			animate={{
+				opacity: 1,
+				transition: { duration: 0.4, delay: 2.5, ease: "easeOut" },
+				filter: "blur(0px)",
+			}}
+			className="inset-shadow-xs mx-auto my-28 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12 dark:bg-gray-1"
+			initial={{ opacity: 0, filter: "blur(10px)" }}
+		>
 			<div className="flex flex-col">
 				<h2 className="font-semibold text-foreground text-lg">
 					Introducing OneLens
@@ -53,6 +63,6 @@ export function FounderLetter() {
 					<span>Founder, OneLens</span>
 				</div>
 			</div>
-		</section>
+		</motion.section>
 	);
 }
