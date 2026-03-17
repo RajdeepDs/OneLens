@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "../index.css";
 import Header from "@/components/header";
 import Providers from "@/components/providers";
+import { ScrollableContainer } from "@/components/scrollable-container";
 
 const interVariable = localFont({
 	src: "../assets/fonts/InterVariable.woff2",
@@ -34,10 +35,10 @@ export default function RootLayout({
 				className={`${interVariable.variable} ${geistMono.variable} antialiased`}
 			>
 				<Providers>
-					<div className="grid h-svh grid-rows-[auto_1fr]">
+					<ScrollableContainer>
 						<Header />
 						{children}
-					</div>
+					</ScrollableContainer>
 				</Providers>
 			</body>
 		</html>

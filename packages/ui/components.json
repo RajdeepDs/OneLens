@@ -1,24 +1,26 @@
 {
-    "$schema": "https://ui.shadcn.com/schema.json",
-    "style": "base-nova",
-    "rsc": true,
-    "tsx": true,
-    "tailwind": {
-        "config": "",
-        "css": "src/styles/globals.css",
-        "baseColor": "neutral",
-        "cssVariables": true,
-        "prefix": ""
-    },
-    "iconLibrary": "lucide",
-    "aliases": {
-        "components": "@onelens/ui/components",
-        "utils": "@onelens/ui/lib/utils",
-        "hooks": "@onelens/ui/hooks",
-        "lib": "@onelens/ui/lib",
-        "ui": "@onelens/ui/components"
-    },
-    "menuColor": "inverted-translucent",
-    "menuAccent": "subtle",
-    "registries": {}
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-nova",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "menuColor": "inverted-translucent",
+  "menuAccent": "subtle",
+  "aliases": {
+    "components": "@onelens/ui/components",
+    "utils": "@onelens/ui/lib/utils",
+    "ui": "@onelens/ui/components",
+    "lib": "@onelens/ui/lib",
+    "hooks": "@onelens/ui/hooks"
+  },
+  "registries": {
+    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json"
+  }
 }

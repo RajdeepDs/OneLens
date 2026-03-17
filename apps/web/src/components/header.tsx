@@ -13,8 +13,8 @@ export default function Header() {
 	] as const;
 
 	return (
-		<header className="z-50 h-(--header-height) items-stretch">
-			<div className="fixed inset-x-0 top-0 mx-auto flex h-(--header-height) w-full items-center border-b bg-gray-1/60 py-3 backdrop-blur-2xl">
+		<header className="sticky inset-x-0 top-0 z-50 h-(--header-height) items-stretch border-b bg-gray-1/60 backdrop-blur-2xl">
+			<div className="mx-auto flex h-(--header-height) w-full items-center py-3">
 				<div className="mx-auto flex w-full items-center justify-between px-6 sm:max-w-7xl">
 					<div className="flex flex-1 items-center justify-start">
 						<Link href={"/"}>

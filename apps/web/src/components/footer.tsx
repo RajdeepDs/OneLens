@@ -1,3 +1,11 @@
+"use client";
+
+import {
+	Marquee,
+	MarqueeContent,
+	MarqueeFade,
+	MarqueeItem,
+} from "@onelens/ui/components/kibo-ui/marquee";
 import Logo from "./ui/logo";
 import { WordMark } from "./ui/word-mark";
 
@@ -29,13 +37,58 @@ const FOOTER_LINKS = [
 	},
 ] as const;
 
+const TICKER_ITEMS = [
+	"PR workflow",
+	"— automated",
+	"Code review",
+	"— accelerated",
+	"Shipping velocity",
+	"— restored",
+	"Engineering overhead",
+	"— eliminated",
+	"Context gaps",
+	"— closed",
+	"CI signal",
+	"— amplified",
+] as const;
+
+function MarqueeTicker() {
+	return (
+		<Marquee className="py-4">
+			<MarqueeFade className="pointer-events-none" side="left" />
+			<MarqueeFade className="pointer-events-none" side="right" />
+			<MarqueeContent
+				aria-label="OneLens highlights"
+				className="max-w-full overflow-x-hidden"
+				speed={35}
+			>
+				{TICKER_ITEMS.map((item, index) => {
+					const isAccent = item.startsWith("—");
+					return (
+						<MarqueeItem
+							className={`max-w-full whitespace-nowrap px-2 ${isAccent ? "font-medium text-foreground" : ""}`}
+							key={`${item}-${index}`}
+						>
+							{item}
+						</MarqueeItem>
+					);
+				})}
+			</MarqueeContent>
+		</Marquee>
+	);
+}
+
 export default function Footer() {
 	return (
-		<footer className="relative mx-auto w-full overflow-hidden border-t bg-background font-mono text-[13px] text-muted-foreground uppercase tracking-widest antialiased">
-			<div className="mx-auto max-w-7xl">
-				{/* Main Content Grid */}
-				<div className="flex flex-col justify-between gap-12 px-8 py-16 md:flex-row lg:px-12">
-					<div className="grid w-full flex-1 grid-cols-2 gap-12 md:grid-cols-5 md:gap-24">
+		<footer className="relative overflow-hidden border-t bg-background font-mono text-[13px] text-muted-foreground uppercase tracking-widest antialiased">
+			<div className="border-b">
+				<div className="flex max-w-sm sm:container sm:mx-auto">
+					<MarqueeTicker />
+				</div>
+			</div>
+			<div className="mx-auto min-w-0 max-w-7xl overflow-x-hidden">
+				<div className="flex min-w-0 flex-col justify-between gap-12 px-8 py-16 md:flex-row lg:px-12">
+					<div className="grid w-full min-w-0 flex-1 grid-cols-2 gap-12 md:grid-cols-5 md:gap-24">
 						{FOOTER_LINKS.map((section) => (
 							<div className="space-y-6" key={section.title}>
 								<h3 className="font-bold text-foreground">{section.title}</h3>
@@ -55,18 +108,17 @@ export default function Footer() {
 						))}
 					</div>
 
-					{/* Circular Badge - Right Side */}
 					<div className="hidden shrink-0 items-start justify-end md:flex">
 						<Logo className="size-8 text-foreground" />
 					</div>
 				</div>
 
-				{/* Footer Info Row */}
 				<div className="px-8 lg:px-12">
-					<div className="flex flex-col items-center justify-between gap-6 border-border/50 border-t py-6 text-center tracking-wide md:flex-row md:text-left">
-						<div className="w-full md:w-1/3 md:text-left">
+					<div className="flex min-w-0 flex-col items-center justify-between gap-6 border-border/50 border-t py-6 text-center tracking-wide md:flex-row md:text-left">
+						<div className="w-full md:w-1/3">
 							© {new Date().getFullYear()} OneLens, Inc. All rights reserved.
 						</div>
+
 						<div className="flex w-full items-center justify-end gap-1.5 md:w-1/3">
 							DESIGNED AND BUILT BY
 							<span className="font-medium text-foreground">
@@ -77,7 +129,7 @@ export default function Footer() {
 				</div>
 
 				<div
-					className="pointer-events-none w-full select-none overflow-hidden px-6 pt-8 text-foreground opacity-[0.15] md:pt-16"
+					className="pointer-events-none w-full min-w-0 max-w-full select-none overflow-hidden px-6 pt-8 text-foreground opacity-[0.15] md:pt-16"
 					style={{
 						WebkitMaskImage:
 							"linear-gradient(to bottom, black 0%, transparent 90%)",

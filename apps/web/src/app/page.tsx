@@ -25,7 +25,7 @@ export default function Home() {
 					</Button>
 				</div>
 
-				<section className="inset-shadow-xs mx-auto mt-25 mb-20 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12 dark:bg-gray-1">
+				<section className="inset-shadow-xs mx-auto my-28 max-w-2xl rounded-lg bg-white p-4 shadow-2xs sm:p-12 dark:bg-gray-1">
 					<div className="flex flex-col">
 						<h2 className="font-semibold text-foreground text-lg">
 							Introducing OneLens
@@ -34,8 +34,8 @@ export default function Home() {
 						<div className="flex flex-col gap-6 text-[15px] text-gray-11">
 							<p>
 								Engineering teams spend a significant part of their week not
-								building — preparing to build, waiting to ship, explaining what
-								they built.
+								building but preparing to build, waiting to ship, explaining
+								what they built.
 							</p>
 							<p>
 								We've accepted this. We've built entire workflows around it.
