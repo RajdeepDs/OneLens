@@ -181,7 +181,7 @@ export function PRCard(props: PRCardProps) {
 						2 files · <span className="text-emerald-600">+186</span>{" "}
 						<span className="text-red-700">-94</span>
 					</span>
-					<Button className={"bg-indigo-600"} size={"sm"} variant={"default"}>
+					<Button size={"sm"} variant={"default"}>
 						Merge
 					</Button>
 				</div>
