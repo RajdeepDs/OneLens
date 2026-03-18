@@ -8,6 +8,7 @@
 
 :root {
     --background: oklch(0.98 0 0);
+    --background-2: oklch(1 0 0);
     --foreground: oklch(0.1 0 0);
 
     --alpha-1: oklch(0 0 0 / 0.051);
@@ -74,7 +75,8 @@
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
+    --background: oklch(0 0 0);
+    --background-2: oklch(0.145 0 0);
     --foreground: oklch(0.94 0 0);
 
     --alpha-1: oklch(1 0 0 / 0.051);
@@ -172,6 +174,7 @@
     --color-gray-12: var(--gray-12);
 
     --color-background: var(--background);
+    --color-background-2: var(--background-2);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
