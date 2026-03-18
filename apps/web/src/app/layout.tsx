@@ -3,9 +3,7 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 import "../index.css";
-import Header from "@/components/header";
 import Providers from "@/components/providers";
-import { ScrollableContainer } from "@/components/scrollable-container";
 
 const interVariable = localFont({
 	src: "../assets/fonts/InterVariable.woff2",
@@ -34,12 +32,7 @@ export default function RootLayout({
 			<body
 				className={`${interVariable.variable} ${geistMono.variable} antialiased`}
 			>
-				<Providers>
-					<ScrollableContainer>
-						<Header />
-						{children}
-					</ScrollableContainer>
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);
