@@ -1,4 +1,6 @@
-import { Button } from "@onelens/ui/components/button";
+"use client";
+
+import { ButtonLink } from "@onelens/ui/components/button";
 import type { Route } from "next";
 import Link from "next/link";
 import { WordMark } from "./ui/word-mark";
@@ -30,9 +32,13 @@ export default function Header() {
 					</nav>
 					<div className="flex flex-1 items-center justify-end gap-2">
 						<UserMenu />
-						<Button shortcut={"J"} variant={"secondary"}>
+						<ButtonLink
+							href={"/waitlist" as Route}
+							shortcut={"j"}
+							variant={"secondary"}
+						>
 							Join waitlist
-						</Button>
+						</ButtonLink>
 					</div>
 				</div>
 			</div>

@@ -6,9 +6,9 @@ import { PRCard } from "@/components/ui/pr-card";
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
 		<div className="grid min-h-svh gap-4 md:grid-cols-2 md:p-1">
-			<div className="h-full border border-alpha-1 bg-background-2 p-4 md:rounded-md">
+			<main className="h-full border border-alpha-1 bg-background-2 p-6 md:rounded-md">
 				{children}
-			</div>
+			</main>
 
 			<div className="hidden md:block">
 				<div className="relative h-full">

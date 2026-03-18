@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@onelens/ui/components/button";
-import Link from "next/link";
 
+import { ButtonLink } from "@onelens/ui/components/button";
+import type { Route } from "next";
 import { authClient } from "@/lib/auth-client";
 
 export default function UserMenu() {
@@ -9,11 +9,13 @@ export default function UserMenu() {
 
 	if (!session) {
 		return (
-			<Link href={session ? "/" : "/login"}>
-				<Button shortcut={"L"} variant="ghost">
-					{session ? "Dashboard" : "Login"}
-				</Button>
-			</Link>
+			<ButtonLink
+				href={session ? "/" : ("/login" as Route)}
+				shortcut={"l"}
+				variant={"ghost"}
+			>
+				{session ? "Dashboard" : "Login"}
+			</ButtonLink>
 		);
 	}
 }

@@ -49,7 +49,7 @@ export function PRCard(props: PRCardProps) {
 	return (
 		<div className="relative">
 			{/* Top-left chip — reviewer context */}
-			<div className="absolute -top-20 -left-40 z-10 -rotate-10">
+			<div className="absolute -top-20 -left-40 z-10 hidden -rotate-10 xl:block">
 				<InsightChip
 					description="Sara touched auth/ last 3 PRs this month."
 					icon={

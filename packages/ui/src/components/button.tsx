@@ -2,11 +2,12 @@
 
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import Link from "next/link"
+import { type ComponentPropsWithoutRef, type ReactElement, type ReactNode } from "react"
 
 import { cn } from "@onelens/ui/lib/utils"
 import { Kbd, KbdGroup } from "./kbd"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip"
-import { Fragment } from "react/jsx-runtime"
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-[13px] font-normal whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -45,87 +46,133 @@ const buttonVariants = cva(
   }
 )
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-    shortcut,
-  tooltip,
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants> & { shortcut?: string | string[], tooltip?: string }) {
+
+type Shortcut = string | string[]
+
+/** Strips blank entries and returns undefined if nothing remains. */
+function normalizeShortcut(shortcut?: Shortcut): string | string[] | undefined {
+  if (Array.isArray(shortcut)) {
+    const values = shortcut.map((v) => v.trim()).filter((v) => v.length > 0)
+    return values.length > 0 ? values : undefined
+  }
+  if (typeof shortcut === "string") {
+    const value = shortcut.trim()
+    return value.length > 0 ? value : undefined
+  }
+  return undefined
+}
+
+function renderShortcut(shortcut?: Shortcut): ReactNode {
+  const normalized = normalizeShortcut(shortcut)
+  if (!normalized) return null
+
+  if (Array.isArray(normalized)) {
+    return (
+      <KbdGroup className="flex items-center gap-1.5 text-muted-foreground" data-shortcut="true">
+        {normalized.map((value) => (
+          // Shortcuts are unique display strings; value alone is a stable key.
+          <Kbd key={value}>
+            <span className="mt-px uppercase">{value}</span>
+          </Kbd>
+        ))}
+      </KbdGroup>
+    )
+  }
+
   return (
-    <ButtonPrimitive
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-          {...props}
-          render={(renderProps) => {
-            const {
-              children,
-              className: renderClassName,
-              ...rest
-            } = renderProps
-
-            const normalizedShortcut = Array.isArray(shortcut)
-              ? shortcut
-                  .map((value) => value.trim())
-                  .filter((value) => value.length > 0)
-              : typeof shortcut === "string"
-                ? shortcut.trim()
-                : undefined
-
-            const hasShortcut = Array.isArray(normalizedShortcut)
-              ? normalizedShortcut.length > 0
-              : Boolean(normalizedShortcut)
-
-            const shortcutMarkup = !hasShortcut
-              ? null
-              : Array.isArray(normalizedShortcut) ? (
-                <KbdGroup className="flex items-center gap-1.5 text-muted-foreground" data-shortcut="true">
-                  {normalizedShortcut.map((value, index) => (
-                    <Kbd key={`${value}-${index}`}>
-                      <span className="mt-px">{value}</span>
-                    </Kbd>
-                  ))}
-                </KbdGroup>
-              ) : (
-                <Kbd className="text-muted-foreground" data-shortcut="true">
-                  <span>{normalizedShortcut}</span>
-                </Kbd>
-              )
-            const shouldRenderShortcut = Boolean(shortcutMarkup)
-            const buttonContent = (
-              <button
-                className={cn(
-                  renderClassName,
-                  "inline-flex items-center gap-2 leading-tight has-data-[shortcut=true]:pr-2",
-                  shouldRenderShortcut && "justify-between"
-                )}
-                {...rest}
-              >
-                <span className="inline-flex items-center gap-1.5 leading-tight">
-                  {children}
-                </span>
-                {shouldRenderShortcut && (
-                  <Fragment
-
-                  >
-                    {shortcutMarkup}
-                  </Fragment>
-                )}
-              </button>
-            )
-
-            if (!tooltip) return buttonContent
-
-            return (
-              <Tooltip>
-                <TooltipTrigger render={buttonContent} />
-                <TooltipContent>{tooltip}</TooltipContent>
-              </Tooltip>
-            )
-          }}
-    />
+    <Kbd className="text-muted-foreground uppercase" data-shortcut="true">
+      <span>{normalized}</span>
+    </Kbd>
   )
 }
 
-export { Button, buttonVariants }
+interface MaybeTooltipProps {
+  tooltip?: ReactNode
+  children: ReactElement
+}
+
+function MaybeTooltip({ tooltip, children }: MaybeTooltipProps) {
+  if (!tooltip) return <>{children}</>
+  return (
+    <Tooltip>
+      <TooltipTrigger render={children} />
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
+  )
+}
+
+export interface ButtonProps
+  extends ButtonPrimitive.Props,
+    VariantProps<typeof buttonVariants> {
+  shortcut?: Shortcut
+  /** Accepts any ReactNode so callers can pass rich content (icons, etc.). */
+  tooltip?: ReactNode
+}
+
+function Button({ className, variant = "default", size = "default", shortcut, tooltip, ...props }: ButtonProps) {
+  return (
+    <MaybeTooltip tooltip={tooltip}>
+      <ButtonPrimitive
+        data-slot="button"
+        // The render prop lets Base UI inject its own accessibility props while
+        // we keep full control over the DOM structure.
+        render={({ children, className: renderClassName, ...rest }) => (
+          <button
+            className={cn(
+              buttonVariants({ variant, size, className }),
+              renderClassName,
+              shortcut && "has-data-[shortcut=true]:justify-between"
+            )}
+            {...rest}
+          >
+            <span>{children}</span>
+            {renderShortcut(shortcut)}
+          </button>
+        )}
+        {...props}
+      />
+    </MaybeTooltip>
+  )
+}
+
+Button.displayName = "Button"
+
+
+interface SharedLinkProps extends VariantProps<typeof buttonVariants> {
+  shortcut?: Shortcut
+  /** Accepts any ReactNode so callers can pass rich content (icons, etc.). */
+  tooltip?: ReactNode
+  className?: string
+  children: ReactNode
+}
+
+
+export type ButtonLinkProps = Omit<ComponentPropsWithoutRef<typeof Link>, "className"> &
+  SharedLinkProps
+
+function ButtonLink({
+  children,
+  className,
+  shortcut,
+  tooltip,
+  size = "default",
+  variant = "default",
+  ...props
+}: ButtonLinkProps) {
+  return (
+    <MaybeTooltip tooltip={tooltip}>
+      <Link
+        data-slot="button-link"
+        className={cn(buttonVariants({ variant, size, className }), shortcut && "has-data-[shortcut=true]:justify-between")}
+        {...props}
+      >
+        <span>{children}</span>
+        {renderShortcut(shortcut)}
+      </Link>
+    </MaybeTooltip>
+  )
+}
+
+ButtonLink.displayName = "ButtonLink"
+
+export { Button, ButtonLink, buttonVariants }

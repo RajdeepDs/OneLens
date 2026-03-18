@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import type { Route } from "next";
 import Link from "next/link";
 
 function AnimatedWords({
@@ -90,7 +91,7 @@ export function HomeHero() {
 					>
 						<Link
 							className="whitespace-nowrap text-[15px] text-gray-11 transition-colors ease-in hover:text-foreground"
-							href={"/login"}
+							href={"/waitlist" as Route}
 						>
 							Join waitlist &rarr;
 						</Link>
