@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@onelens/ui/components/button";
 import type { Route } from "next";
 import Link from "next/link";
@@ -31,7 +29,6 @@ export default function Header() {
 						})}
 					</nav>
 					<div className="flex flex-1 items-center justify-end gap-2">
-						{/*<ModeToggle />*/}
 						<UserMenu />
 						<Button shortcut={"J"} variant={"secondary"}>
 							Join waitlist

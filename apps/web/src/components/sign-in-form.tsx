@@ -2,19 +2,14 @@ import { Button } from "@onelens/ui/components/button";
 import { Input } from "@onelens/ui/components/input";
 import { Label } from "@onelens/ui/components/label";
 import { useForm } from "@tanstack/react-form";
+import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import z from "zod";
-
 import { authClient } from "@/lib/auth-client";
-
 import Loader from "./loader";
 
-export default function SignInForm({
-	onSwitchToSignUp,
-}: {
-	onSwitchToSignUp: () => void;
-}) {
+export default function SignInForm() {
 	const router = useRouter();
 	const { isPending } = authClient.useSession();
 
@@ -31,7 +26,7 @@ export default function SignInForm({
 				},
 				{
 					onSuccess: () => {
-						router.push("/dashboard");
+						router.push("/dashboard" as Route);
 						toast.success("Sign in successful");
 					},
 					onError: (error) => {
@@ -131,10 +126,9 @@ export default function SignInForm({
 			<div className="mt-4 text-center">
 				<Button
 					className="text-indigo-600 hover:text-indigo-800"
-					onClick={onSwitchToSignUp}
 					variant="link"
 				>
-					Need an account? Sign Up
+					Don&apos;t have an account? Join waitlist
 				</Button>
 			</div>
 		</div>
