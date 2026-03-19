@@ -178,8 +178,21 @@ export function FounderLetter() {
 	const PARA_7_DELAY = PARA_6_DELAY + 0.15;
 	const SIG_DELAY = PARA_7_DELAY + 0.15;
 
+	const containerInitial = shouldReduceMotion
+		? { opacity: 1, filter: "blur(0px)" }
+		: { opacity: 0, filter: "blur(8px)" };
+
 	return (
-		<section className="relative mx-auto my-28 max-w-2xl rounded-2xl border border-border/50 bg-white p-4 shadow-foreground/5 shadow-xl sm:p-12 dark:bg-gray-1 dark:shadow-foreground/10">
+		<motion.section
+			animate={{ opacity: 1, filter: "blur(0px)" }}
+			className="relative mx-auto my-28 max-w-2xl rounded-2xl border border-border/50 bg-white p-4 shadow-foreground/5 shadow-xl sm:p-12 dark:bg-gray-1 dark:shadow-foreground/10"
+			initial={containerInitial}
+			transition={{
+				delay: shouldReduceMotion ? 0 : INITIAL_DELAY - 0.3,
+				duration: shouldReduceMotion ? 0 : 0.6,
+				ease: shouldReduceMotion ? undefined : NORMAL_EASE,
+			}}
+		>
 			<div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-2xl">
 				<div className="pointer-events-none absolute -bottom-1/2 -left-1/4 size-full rounded-full bg-linear-to-t from-alpha-1/50 to-transparent blur-3xl" />
 				<div className="pointer-events-none absolute -top-1/4 -right-1/4 size-[80%] rounded-full bg-linear-to-b from-alpha-1/30 to-transparent blur-3xl" />
@@ -238,6 +251,6 @@ export function FounderLetter() {
 
 				<AnimatedSignature delayOffset={SIG_DELAY} />
 			</div>
-		</section>
+		</motion.section>
 	);
 }

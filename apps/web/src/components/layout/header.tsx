@@ -8,13 +8,14 @@ import { useRouter } from "next/navigation";
 import { WordMark } from "@/components/ui";
 import { UserMenu } from "@/components/user";
 
-export default function Header() {
-	const links = [
-		{ to: "/changelog", label: "Changelog" },
-		{ to: "/contact", label: "Contact" },
-	] as const;
+const links = [
+	{ to: "/changelog", label: "Changelog" },
+	{ to: "/contact", label: "Contact" },
+] as const;
 
+export default function Header() {
 	const router = useRouter();
+
 	useGlobalHotkeys({
 		keys: "j",
 		callback: () => {
@@ -29,6 +30,7 @@ export default function Header() {
 		},
 		options: { preventDefault: true },
 	});
+
 	return (
 		<header className="sticky inset-x-0 top-0 z-50 h-(--header-height) items-stretch border-border/50 border-b bg-gray-1/80 backdrop-blur-2xl supports-backdrop-filter:bg-gray-1/60">
 			<div className="mx-auto flex h-(--header-height) w-full items-center py-3">
