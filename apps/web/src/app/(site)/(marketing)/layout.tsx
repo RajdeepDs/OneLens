@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import Header from "@/components/header";
-import { ScrollableContainer } from "@/components/scrollable-container";
+import { Header, ScrollableContainer } from "@/components/layout";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
 	return (

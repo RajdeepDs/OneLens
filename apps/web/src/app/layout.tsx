@@ -3,7 +3,7 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 import "../index.css";
-import Providers from "@/components/providers";
+import { Providers } from "@/components/theme";
 
 const interVariable = localFont({
 	src: "../assets/fonts/InterVariable.woff2",

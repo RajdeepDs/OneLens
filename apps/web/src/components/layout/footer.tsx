@@ -6,8 +6,7 @@ import {
 	MarqueeFade,
 	MarqueeItem,
 } from "@onelens/ui/components/kibo-ui/marquee";
-import Logo from "./ui/logo";
-import { WordMark } from "./ui/word-mark";
+import { Logo, WordMark } from "@/components/ui";
 
 const FOOTER_LINKS = [
 	{

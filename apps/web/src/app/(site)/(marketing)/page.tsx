@@ -1,6 +1,6 @@
-import Footer from "@/components/footer";
 import { FounderLetter } from "@/components/home/founder-letter";
 import { HomeHero } from "@/components/home/home-hero";
+import { Footer } from "@/components/layout";
 
 export default function HomePage() {
 	return (

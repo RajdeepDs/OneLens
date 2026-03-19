@@ -3,8 +3,8 @@
 import { ButtonLink } from "@onelens/ui/components/button";
 import type { Route } from "next";
 import Link from "next/link";
-import { WordMark } from "./ui/word-mark";
-import UserMenu from "./user-menu";
+import { WordMark } from "@/components/ui";
+import { UserMenu } from "@/components/user";
 
 export default function Header() {
 	const links = [
