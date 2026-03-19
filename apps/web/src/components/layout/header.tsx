@@ -21,7 +21,7 @@ export default function Header() {
 							<WordMark />
 						</Link>
 					</div>
-					<nav className="hidden flex-1 justify-center gap-4 text-[13px] sm:flex">
+					<nav className="hidden flex-1 justify-center gap-4 text-[13px]">
 						{links.map(({ to, label }) => {
 							return (
 								<Link href={to as Route} key={to}>

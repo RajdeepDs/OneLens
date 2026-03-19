@@ -9,10 +9,10 @@ import {
 import { Logo, WordMark } from "@/components/ui";
 
 const FOOTER_LINKS = [
-	{
-		title: "Product",
-		links: [{ label: "Changelog", href: "/" }],
-	},
+	// {
+	// 	title: "Product",
+	// 	links: [{ label: "Changelog", href: "/" }],
+	// },
 	{
 		title: "Connect",
 		links: [
@@ -20,17 +20,17 @@ const FOOTER_LINKS = [
 			{ label: "GitHub", href: "https://github.com/RajdeepDs/OneLens" },
 		],
 	},
-	{
-		title: "Company",
-		links: [
-			{
-				label: "Contact us",
-				href: "mailto:rajdeepds626@gmail.com",
-			},
-			{ label: "Privacy", href: "/" },
-			{ label: "Terms of Use", href: "/" },
-		],
-	},
+	// {
+	// 	title: "Company",
+	// 	links: [
+	// 		{
+	// 			label: "Contact us",
+	// 			href: "mailto:rajdeepds626@gmail.com",
+	// 		},
+	// 		{ label: "Privacy", href: "/" },
+	// 		{ label: "Terms of Use", href: "/" },
+	// 	],
+	// },
 ] as const;
 
 const TICKER_ITEMS = [
