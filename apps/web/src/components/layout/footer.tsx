@@ -94,7 +94,7 @@ export default function Footer() {
 										return (
 											<li key={link.label}>
 												<a
-													className="transition-colors hover:text-foreground"
+													className="transition-colors duration-150 ease-[var(--ease-out)] hover:text-foreground"
 													href={link.href}
 													{...(isExternal && {
 														rel: "noopener noreferrer",

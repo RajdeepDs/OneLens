@@ -26,6 +26,7 @@ export const MarqueeContent = ({
     autoFill={autoFill}
     loop={loop}
     pauseOnHover={pauseOnHover}
+    style={{ animationTimingFunction: "linear" }}
     {...props}
   />
 );

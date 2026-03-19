@@ -147,6 +147,10 @@
 
     --header-height: 52px;
 
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
     --color-alpha-1: var(--alpha-1);
     --color-alpha-2: var(--alpha-2);
     --color-alpha-3: var(--alpha-3);
@@ -211,11 +215,23 @@
 }
 
 @layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
     * {
         -webkit-tap-highlight-color: transparent;
         font-synthesis-weight: none;
-        scrollbar-width: thin;
-        scrollbar-color: var(--ui-gray-500) transparent;
     }
 
     * {
@@ -226,14 +242,29 @@
         @apply font-sans bg-background text-foreground;
     }
 
-    html {
-        @apply font-sans;
-    }
-
     html,
     body {
         @apply isolate relative flex h-full min-h-svh flex-1 flex-col overflow-hidden;
         -webkit-app-region: no-drag;
+    }
+
+    ::selection {
+        background: var(--alpha-6);
+        color: var(--foreground);
+    }
+
+    ::-moz-selection {
+        background: var(--alpha-6);
+        color: var(--foreground);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+    }
+
+    :focus:not(:focus-visible) {
+        outline: none;
     }
 
     .scrollbar-hide {
@@ -245,9 +276,58 @@
         display: none;
     }
 
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--alpha-4);
+        border-radius: 9999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--alpha-6);
+        background-clip: padding-box;
+    }
+
     button:not(:disabled),
     [role="button"]:not(:disabled) {
         cursor: pointer;
     }
 
+    a {
+        cursor: pointer;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .interactive-hover {
+        cursor: pointer;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .interactive-hover:active {
+        transform: scale(0.97);
+        transition: transform 100ms ease-out;
+    }
 }
