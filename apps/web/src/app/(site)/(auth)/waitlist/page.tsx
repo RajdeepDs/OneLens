@@ -1,8 +1,7 @@
-import { Button } from "@onelens/ui/components/button";
-import { Input } from "@onelens/ui/components/input";
 import type { Route } from "next";
 import Link from "next/link";
-import Logo from "@/components/ui/logo";
+import { JoinWaitlistForm } from "@/components/auth";
+import { Logo } from "@/components/ui";
 
 export default function EarlyAccessPage() {
 	return (
@@ -17,15 +16,7 @@ export default function EarlyAccessPage() {
 						We&apos;ll reach out when we open access.
 					</p>
 				</div>
-				<div className="w-full space-y-4">
-					<Input
-						className="h-9 placeholder:text-[13px] placeholder-shown:pb-2"
-						placeholder="name@company.com"
-					/>
-					<Button className={"w-full"} size={"lg"}>
-						Submit
-					</Button>
-				</div>
+				<JoinWaitlistForm />
 			</div>
 			<div>
 				<p className="text-[13px] text-gray-10">
