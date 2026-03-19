@@ -31,7 +31,7 @@ export function JoinWaitlistForm() {
 		},
 		validators: {
 			onSubmit: z.object({
-				email: z.string().email("Please enter a valid email address"),
+				email: z.email("Please enter a valid email address"),
 			}),
 		},
 	});

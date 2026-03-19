@@ -13,21 +13,22 @@
     "scripts": {
         "check-types": "tsc --noEmit"
     },
-    "dependencies": {
-        "@base-ui/react": "^1.0.0",
-        "class-variance-authority": "^0.7.1",
-        "clsx": "^2.1.1",
-        "lucide-react": "catalog:",
-        "next-themes": "^0.4.6",
-        "react": "catalog:",
-        "react-dom": "catalog:",
-        "next": "catalog:",
-        "react-fast-marquee": "^1.6.5",
-        "shadcn": "^4.0.6",
-        "sonner": "^2.0.7",
-        "tailwind-merge": "^3.3.1",
-        "tw-animate-css": "^1.3.4"
-    },
+"dependencies": {
+		"@base-ui/react": "^1.0.0",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"lucide-react": "catalog:",
+		"next-themes": "^0.4.6",
+		"react": "catalog:",
+		"react-dom": "catalog:",
+		"next": "catalog:",
+		"react-fast-marquee": "^1.6.5",
+		"react-hotkeys-hook": "^4.0.0",
+		"shadcn": "^4.0.6",
+		"sonner": "^2.0.7",
+		"tailwind-merge": "^3.3.1",
+		"tw-animate-css": "^1.3.4"
+	},
     "devDependencies": {
         "@onelens/config": "workspace:*",
         "@types/react": "catalog:",

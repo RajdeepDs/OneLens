@@ -94,7 +94,7 @@ export default function Footer() {
 										return (
 											<li key={link.label}>
 												<a
-													className="transition-colors duration-150 ease-[var(--ease-out)] hover:text-foreground"
+													className="transition-colors duration-150 ease-out hover:text-foreground"
 													href={link.href}
 													{...(isExternal && {
 														rel: "noopener noreferrer",
@@ -122,7 +122,7 @@ export default function Footer() {
 							© {new Date().getFullYear()} OneLens, Inc. All rights reserved.
 						</div>
 
-						<div className="flex w-full items-center justify-end gap-1.5 md:w-1/3">
+						<div className="hidden w-full items-center justify-end gap-1.5 md:flex md:w-1/3">
 							DESIGNED AND BUILT BY
 							<span className="font-medium text-foreground">
 								THE ONELENS COMPANY
