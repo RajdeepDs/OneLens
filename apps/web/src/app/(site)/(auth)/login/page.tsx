@@ -5,11 +5,11 @@ import Logo from "@/components/ui/logo";
 
 export default function LoginPage() {
 	return (
-		<div className="flex h-full w-full flex-col items-center justify-between">
+		<div className="flex h-full w-full max-w-sm flex-col items-center justify-between gap-8 py-12">
 			<Link href={"/" as Route}>
 				<Logo className="size-6 text-gray-8" />
 			</Link>
-			<div className="flex w-sm flex-col items-center justify-center gap-7">
+			<div className="flex w-full flex-col items-center justify-center gap-7">
 				<div className="text-center">
 					<h1 className="font-medium text-xl leading-7">Welcome to OneLens</h1>
 				</div>
@@ -18,7 +18,7 @@ export default function LoginPage() {
 						Sign in with Google
 					</Button>
 				</div>
-				<div className="w-xs text-center text-[13px] text-gray-11">
+				<div className="text-center text-[13px] text-gray-11">
 					<p>
 						By signing in, you agree to our{" "}
 						<strong className="font-medium underline underline-offset-2">

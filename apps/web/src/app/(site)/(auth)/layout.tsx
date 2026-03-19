@@ -5,12 +5,12 @@ import { PRCard } from "@/components/ui/pr-card";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
-		<div className="grid min-h-svh gap-4 md:grid-cols-2 md:p-1">
-			<main className="h-full border border-alpha-1 bg-background-2 p-6 md:rounded-md">
+		<div className="flex min-h-svh overflow-hidden">
+			<main className="flex h-svh w-full items-center justify-center bg-background-2 p-6 md:w-auto md:flex-1">
 				{children}
 			</main>
 
-			<div className="hidden md:block">
+			<div className="hidden h-svh xl:block xl:w-1/2">
 				<div className="relative h-full">
 					<FlickeringGrid
 						className="absolute inset-0 z-0 size-full"
