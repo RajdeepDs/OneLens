@@ -11,25 +11,22 @@ import { Logo, WordMark } from "@/components/ui";
 const FOOTER_LINKS = [
 	{
 		title: "Product",
-		links: [
-			{ label: "Changelog", href: "/" },
-			{ label: "Roadmap", href: "/" },
-		],
+		links: [{ label: "Changelog", href: "/" }],
 	},
 	{
 		title: "Connect",
 		links: [
-			{ label: "X", href: "/" },
-			{ label: "LinkedIn", href: "/" },
-			{ label: "GitHub", href: "/" },
+			{ label: "X", href: "https://x.com/Rajdeep__ds" },
+			{ label: "GitHub", href: "https://github.com/RajdeepDs/OneLens" },
 		],
 	},
 	{
 		title: "Company",
 		links: [
-			{ label: "About Us", href: "/" },
-			{ label: "Contact", href: "/" },
-			{ label: "Blog", href: "/" },
+			{
+				label: "Contact us",
+				href: "mailto:rajdeepds626@gmail.com",
+			},
 			{ label: "Privacy", href: "/" },
 			{ label: "Terms of Use", href: "/" },
 		],
@@ -92,16 +89,23 @@ export default function Footer() {
 							<div className="space-y-6" key={section.title}>
 								<h3 className="font-bold text-foreground">{section.title}</h3>
 								<ul className="flex flex-col gap-4">
-									{section.links.map((link) => (
-										<li key={link.label}>
-											<a
-												className="transition-colors hover:text-foreground"
-												href={link.href}
-											>
-												{link.label}
-											</a>
-										</li>
-									))}
+									{section.links.map((link) => {
+										const isExternal = link.href.startsWith("http");
+										return (
+											<li key={link.label}>
+												<a
+													className="transition-colors hover:text-foreground"
+													href={link.href}
+													{...(isExternal && {
+														rel: "noopener noreferrer",
+														target: "_blank",
+													})}
+												>
+													{link.label}
+												</a>
+											</li>
+										);
+									})}
 								</ul>
 							</div>
 						))}
