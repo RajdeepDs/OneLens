@@ -9,7 +9,7 @@
         "BETTER_AUTH_URL",
         "CORS_ORIGIN"
       ],
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^db:migrate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**"]
     },
@@ -30,8 +30,7 @@
       "cache": false
     },
     "db:migrate": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "db:studio": {
       "cache": false,

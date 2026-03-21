@@ -39,6 +39,7 @@
     "db:watch": "turbo -F @onelens/db db:watch",
     "db:stop": "turbo -F @onelens/db db:stop",
     "db:down": "turbo -F @onelens/db db:down",
+    "postinstall": "turbo -F @onelens/db db:migrate",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "prepare": "husky"
