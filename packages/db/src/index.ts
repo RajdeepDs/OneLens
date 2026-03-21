@@ -2,7 +2,9 @@ import { env } from "@onelens/env/server";
 import * as schema from "./schema";
 
 async function createDb() {
-	if (env.NODE_ENV === "production") {
+	const isNeon = env.DATABASE_URL.includes("neon.tech");
+
+	if (isNeon) {
 		const { neon } = await import("@neondatabase/serverless");
 		const { drizzle } = await import("drizzle-orm/neon-http");
 		const sql = neon(env.DATABASE_URL);
