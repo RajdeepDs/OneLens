@@ -3,7 +3,9 @@
 import { Button } from "@onelens/ui/components/button";
 import { GitHub, IconLoader } from "@onelens/ui/components/icons";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
 const containerVariants = {
@@ -12,7 +14,7 @@ const containerVariants = {
 		opacity: 1,
 		transition: { staggerChildren: 0.1, delayChildren: 0.05 },
 	},
-};
+} as const;
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
@@ -22,23 +24,73 @@ const itemVariants = {
 		filter: "blur(0px)",
 		transition: { duration: 0.3, ease: [0.2, 0, 0, 1] as const },
 	},
-};
+} as const;
 
 const exitVariants = {
 	opacity: 0,
 	y: -8,
 	filter: "blur(4px)",
 	transition: { duration: 0.15, ease: "easeIn" as const },
-};
+} as const;
+
+const DEFAULT_SIGN_IN_ERROR_MESSAGE = "Something went wrong. Please try again.";
+
+function getErrorMessage(error: unknown): string {
+	if (error instanceof Error) {
+		return error.message;
+	}
+
+	if (typeof error === "string") {
+		return error;
+	}
+
+	return DEFAULT_SIGN_IN_ERROR_MESSAGE;
+}
+
+function AuthErrorToast() {
+	const searchParams = useSearchParams();
+	const router = useRouter();
+
+	useEffect(() => {
+		const error = searchParams.get("error");
+		if (error) {
+			const formattedError = error.replace(/_/g, " ");
+			toast.error(
+				formattedError === "UNAUTHORIZED" || formattedError.includes("waitlist")
+					? "You're on the waitlist. We'll notify you once you're approved."
+					: getErrorMessage(formattedError),
+				{ id: "auth-error" }
+			);
+			router.replace("/login", { scroll: false });
+		}
+	}, [searchParams, router]);
+
+	return null;
+}
 
 export function GitHubOAuthContainer() {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const signIn = () => {
+	const signIn = async (): Promise<void> => {
+		if (isLoading) {
+			return;
+		}
+
 		setIsLoading(true);
-		authClient.signIn.social({
-			provider: "github",
-		});
+
+		try {
+			// Better Auth usually redirects on success. In some cases it may return
+			// a structured error object instead of throwing.
+			const result = await authClient.signIn.social({ provider: "github" });
+
+			if (result?.error) {
+				toast.error(result.error.message || DEFAULT_SIGN_IN_ERROR_MESSAGE);
+				setIsLoading(false);
+			}
+		} catch (error: unknown) {
+			toast.error(getErrorMessage(error));
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -48,6 +100,10 @@ export function GitHubOAuthContainer() {
 			initial="hidden"
 			variants={containerVariants}
 		>
+			<Suspense>
+				<AuthErrorToast />
+			</Suspense>
+
 			<motion.h1
 				className="text-balance text-center font-medium text-xl leading-7"
 				variants={itemVariants}
@@ -77,6 +133,7 @@ export function GitHubOAuthContainer() {
 								<IconLoader className="size-5" />
 							</motion.div>
 						</motion.div>
+
 						<motion.p
 							className="text-center text-[13px] text-gray-11"
 							variants={itemVariants}
@@ -106,6 +163,7 @@ export function GitHubOAuthContainer() {
 								Sign in with GitHub
 							</Button>
 						</motion.div>
+
 						<motion.p
 							className="text-center text-[13px] text-gray-11"
 							variants={itemVariants}
