@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@central-icons-react/all": "^1.1.173",
     "@onelens/api": "workspace:*",
     "@onelens/auth": "workspace:*",
     "@onelens/env": "workspace:*",
