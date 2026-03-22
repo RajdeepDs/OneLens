@@ -2,6 +2,7 @@
 
 import { Button } from "@onelens/ui/components/button";
 import { GitHub, IconLoader } from "@onelens/ui/components/icons";
+import { useGlobalHotkeys } from "@onelens/ui/hooks/use-global-hotkeys";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -79,8 +80,6 @@ export function GitHubOAuthContainer() {
 		setIsLoading(true);
 
 		try {
-			// Better Auth usually redirects on success. In some cases it may return
-			// a structured error object instead of throwing.
 			const result = await authClient.signIn.social({ provider: "github" });
 
 			if (result?.error) {
@@ -92,6 +91,16 @@ export function GitHubOAuthContainer() {
 			setIsLoading(false);
 		}
 	};
+
+	useGlobalHotkeys({
+		keys: "g",
+		callback: () => {
+			if (!isLoading) {
+				signIn();
+			}
+		},
+		options: { preventDefault: true },
+	});
 
 	return (
 		<motion.div
