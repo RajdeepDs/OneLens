@@ -11,7 +11,9 @@ export default function EarlyAccessPage() {
 			</Link>
 			<div className="flex w-full flex-col items-center justify-center gap-7">
 				<div className="space-y-2 text-center">
-					<h1 className="font-medium text-xl leading-7">Join the waitlist</h1>
+					<h1 className="text-balance font-medium text-xl leading-7">
+						Join the waitlist
+					</h1>
 					<p className="text-[15px] text-gray-10">
 						We&apos;ll reach out when we open access.
 					</p>

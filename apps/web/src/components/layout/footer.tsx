@@ -87,7 +87,9 @@ export default function Footer() {
 					<div className="grid w-full min-w-0 flex-1 grid-cols-2 gap-12 md:grid-cols-5 md:gap-24">
 						{FOOTER_LINKS.map((section) => (
 							<div className="space-y-6" key={section.title}>
-								<h3 className="font-bold text-foreground">{section.title}</h3>
+								<h3 className="text-balance font-bold text-foreground">
+									{section.title}
+								</h3>
 								<ul className="flex flex-col gap-4">
 									{section.links.map((link) => {
 										const isExternal = link.href.startsWith("http");

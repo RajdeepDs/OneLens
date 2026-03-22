@@ -53,7 +53,7 @@ export function KeyboardShortcut({
 						<span
 							key={`shortcut-${shortcutIndex}-key-${keyIndex}`}
 							className={cn(
-								"inline-flex min-w-5 items-center justify-center rounded border border-border p-1 text-xs font-normal leading-none text-foreground",
+								"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 text-xs font-normal leading-none text-foreground",
 								{
 									"font-[emoji]": isEmoji,
 								},
@@ -106,7 +106,7 @@ export function KeyboardShortcut({
 				<span
 					key={`key-${index}`}
 					className={cn(
-						"inline-flex min-w-5 items-center justify-center rounded border border-border p-1 text-xs font-normal leading-none text-foreground",
+						"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 text-xs font-normal leading-none text-foreground",
 						{
 							"font-[emoji]": isEmoji,
 						},

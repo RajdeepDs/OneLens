@@ -100,7 +100,7 @@ export function HomeHero() {
 		<div className="relative mt-32">
 			<div className="relative flex flex-col gap-8 text-balance">
 				<div className="flex items-center text-wrap sm:max-w-lg md:max-w-3xl">
-					<h1 className="font-semibold text-4xl leading-10 tracking-tight md:text-[56px] md:leading-13 md:tracking-normal">
+					<h1 className="text-balance font-semibold text-4xl leading-10 tracking-tight md:text-[56px] md:leading-13 md:tracking-normal">
 						<AnimatedWords
 							delayOffset={INITIAL_DELAY}
 							text="The PR workflow is broken."

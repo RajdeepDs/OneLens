@@ -81,7 +81,7 @@ function AnimatedHeading({
 				filter: "blur(0px)",
 				scale: 1,
 			}}
-			className="font-semibold text-foreground text-lg"
+			className="text-balance font-semibold text-foreground text-lg"
 			initial={initial}
 			transition={{
 				delay: shouldReduceMotion ? 0 : delayOffset,

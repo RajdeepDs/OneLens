@@ -50,7 +50,7 @@ export default function Header() {
 								>
 									<span className="relative">
 										{label}
-										<span className="absolute -bottom-0.5 left-0 h-px w-0 bg-foreground transition-all duration-200 ease-out group-hover:w-full" />
+										<span className="absolute -bottom-0.5 left-0 h-px w-0 bg-foreground transition-[width] duration-200 ease-out group-hover:w-full" />
 									</span>
 								</Link>
 							);

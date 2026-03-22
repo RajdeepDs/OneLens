@@ -143,7 +143,9 @@ export function PRCard(props: PRCardProps) {
 					</div>
 					<div className="space-y-0.5 text-right">
 						<p className="text-foreground">Checks</p>
-						<p className="text-[11px] text-emerald-700">148 passed</p>
+						<p className="text-[11px] text-emerald-700 tabular-nums">
+							148 passed
+						</p>
 						<p className="text-muted-foreground/80">No errors</p>
 					</div>
 				</div>
@@ -177,7 +179,7 @@ export function PRCard(props: PRCardProps) {
 
 				{/* Footer */}
 				<div className="flex items-center justify-between text-[11px] text-muted-foreground">
-					<span>
+					<span className="tabular-nums">
 						2 files · <span className="text-emerald-600">+186</span>{" "}
 						<span className="text-red-700">-94</span>
 					</span>
