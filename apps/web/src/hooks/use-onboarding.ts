@@ -1,10 +1,12 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { useQueryState } from "nuqs";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
-import type { Repository } from "@/components/onboarding/RepositoryStep";
-import type { TeamInvite } from "@/components/onboarding/TeamsStep";
+import { parsers } from "@/components/onboarding/onboarding-params";
+import type { Repository } from "@/components/onboarding/repository-step";
+import type { TeamInvite } from "@/components/onboarding/teams-step";
 import { orpc } from "@/utils/orpc";
 
 interface UseOnboardingOptions {
@@ -38,7 +40,7 @@ const TOTAL_STEPS = 4;
 export function useOnboarding({
 	onComplete,
 }: UseOnboardingOptions): UseOnboardingReturn {
-	const [currentStep, setCurrentStep] = useState(0);
+	const [currentStep, setCurrentStep] = useQueryState("step", parsers.step);
 	const [direction, setDirection] = useState(1);
 	const [workspaceId, setWorkspaceId] = useState<string | null>(null);
 	const [workspaceName, setWorkspaceName] = useState("");
@@ -49,12 +51,12 @@ export function useOnboarding({
 	const goNext = useCallback(() => {
 		setDirection(1);
 		setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS - 1));
-	}, []);
+	}, [setCurrentStep]);
 
 	const goBack = useCallback(() => {
 		setDirection(-1);
 		setCurrentStep((prev) => Math.max(prev - 1, 0));
-	}, []);
+	}, [setCurrentStep]);
 
 	const saveWorkspaceMutation = useMutation(
 		orpc.saveWorkspace.mutationOptions({
