@@ -3,6 +3,7 @@
 import { Button } from "@onelens/ui/components/button";
 import { Field, FieldError, FieldLabel } from "@onelens/ui/components/field";
 import { Input } from "@onelens/ui/components/input";
+import slugify from "@sindresorhus/slugify";
 import { motion } from "motion/react";
 import { useState } from "react";
 
@@ -10,15 +11,6 @@ interface WorkspaceStepProps {
 	initialValue?: string;
 	isLoading?: boolean;
 	onNext: (data: { name: string; slug: string }) => void;
-}
-
-function slugify(text: string): string {
-	return text
-		.toLowerCase()
-		.trim()
-		.replace(/[^\w\s-]/g, "")
-		.replace(/[\s_-]+/g, "-")
-		.replace(/^-+|-+$/g, "");
 }
 
 export function WorkspaceStep({
