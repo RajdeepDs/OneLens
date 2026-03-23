@@ -114,7 +114,7 @@ export function GitHubOAuthContainer() {
 			</Suspense>
 
 			<motion.h1
-				className="text-balance text-center font-medium text-xl leading-7"
+				className="text-balance text-center text-title-small-semibold"
 				variants={itemVariants}
 			>
 				Welcome to OneLens
@@ -144,7 +144,7 @@ export function GitHubOAuthContainer() {
 						</motion.div>
 
 						<motion.p
-							className="text-center text-[13px] text-gray-11"
+							className="text-center text-body-small-regular text-gray-11"
 							variants={itemVariants}
 						>
 							Redirecting to GitHub...
@@ -174,7 +174,7 @@ export function GitHubOAuthContainer() {
 						</motion.div>
 
 						<motion.p
-							className="text-center text-[13px] text-gray-11"
+							className="text-center text-body-small-regular text-gray-11"
 							variants={itemVariants}
 						>
 							By signing in, you agree to our{" "}
