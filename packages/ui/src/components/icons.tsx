@@ -210,6 +210,9 @@ import {
   IconAlignmentCenter,
   IconAlignmentRight,
   IconAlignmentJustify,
+  IconChevronLeftMedium,
+  IconChevronRightMedium,
+  IconChevronTopMedium,
 } from "@central-icons-react/round-outlined-radius-3-stroke-1.5";
 
 export {
@@ -229,6 +232,9 @@ export {
   IconChevronRight,
   IconChevronBottom,
   IconChevronTop,
+  IconChevronLeftMedium,
+  IconChevronRightMedium,
+  IconChevronTopMedium,
   IconArrowLeft,
   IconArrowRight,
   IconArrowUp,

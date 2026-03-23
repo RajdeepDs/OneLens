@@ -127,7 +127,7 @@ function Button({ className, variant = "default", size = "default", shortcut, to
         {icon && cloneElement(icon, {
           className: cn("pointer-events-none absolute top-1/2 left-2.5 size-5 -translate-y-1/2", icon.props.className),
         })}
-        <span>{children}</span>
+        {children}
         {renderShortcut(normalizedShortcut)}
       </ButtonPrimitive>
     </MaybeTooltip>
