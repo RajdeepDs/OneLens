@@ -120,7 +120,7 @@ function Button({ className, variant = "default", size = "default", shortcut, to
         data-icon={icon ? true : undefined}
         className={cn(
           buttonVariants({ variant, size, className }),
-          normalizedShortcut && "relative",
+          normalizedShortcut || icon && "relative",
         )}
         {...props}
       >
