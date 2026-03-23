@@ -1,12 +1,7 @@
 "use client";
 
 import { Button } from "@onelens/ui/components/button";
-import {
-	Field,
-	FieldDescription,
-	FieldError,
-	FieldLabel,
-} from "@onelens/ui/components/field";
+import { Field, FieldError, FieldLabel } from "@onelens/ui/components/field";
 import { Input } from "@onelens/ui/components/input";
 import { motion } from "motion/react";
 import { useState } from "react";
@@ -14,7 +9,7 @@ import { useState } from "react";
 interface WorkspaceStepProps {
 	initialValue?: string;
 	isLoading?: boolean;
-	onNext: (name: string) => void;
+	onNext: (data: { name: string; slug: string }) => void;
 }
 
 function slugify(text: string): string {
@@ -43,7 +38,7 @@ export function WorkspaceStep({
 			return;
 		}
 		setError(null);
-		onNext(name.trim());
+		onNext({ name: name.trim(), slug });
 	};
 
 	return (
@@ -55,12 +50,9 @@ export function WorkspaceStep({
 			transition={{ duration: 0.2 }}
 		>
 			<div className="flex flex-col gap-2">
-				<h2 className="font-medium text-lg leading-snug">
-					Create your workspace
-				</h2>
-				<p className="text-muted-foreground text-sm">
-					This will be the home for your team&apos;s code reviews and pull
-					requests.
+				<h2 className="text-title-small-semibold">Create your workspace</h2>
+				<p className="text-body-regular-spaced text-gray-11">
+					Your workspace is where your team&apos;s pull requests live.
 				</p>
 			</div>
 
@@ -82,11 +74,22 @@ export function WorkspaceStep({
 						value={name}
 					/>
 					{error && <FieldError>{error}</FieldError>}
-					{!error && slug && (
-						<FieldDescription>
-							Slug: <span className="font-mono text-xs">{slug}</span>
-						</FieldDescription>
-					)}
+				</Field>
+
+				<Field>
+					<FieldLabel htmlFor="workspace-slug">Workspace slug</FieldLabel>
+					<div className="relative">
+						<Input
+							className="h-10 ps-33.5"
+							disabled
+							id="workspace-slug"
+							placeholder="acme-corp"
+							value={slug}
+						/>
+						<span className="pointer-events-none absolute inset-s-0 inset-y-0 flex items-center justify-center ps-3 text-body-small-spaced text-gray-11 peer-disabled:opacity-50">
+							onelens.vercel.app/
+						</span>
+					</div>
 				</Field>
 
 				<Button

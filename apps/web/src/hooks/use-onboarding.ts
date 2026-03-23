@@ -22,7 +22,7 @@ interface UseOnboardingReturn {
 	isReposLoading: boolean;
 	isWorkspaceLoading: boolean;
 	repositories: Repository[];
-	saveWorkspace: (name: string) => void;
+	saveWorkspace: (data: { name: string; slug: string }) => void;
 	selectedRepoIds: number[];
 	setRepositories: (repos: Repository[]) => void;
 	setSelectedRepoIds: (ids: number[]) => void;
@@ -109,9 +109,9 @@ export function useOnboarding({
 	);
 
 	const saveWorkspace = useCallback(
-		(name: string) => {
-			setWorkspaceName(name);
-			saveWorkspaceMutation.mutate({ name });
+		(data: { name: string; slug: string }) => {
+			setWorkspaceName(data.name);
+			saveWorkspaceMutation.mutate(data);
 		},
 		[saveWorkspaceMutation]
 	);

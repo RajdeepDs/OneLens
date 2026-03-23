@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import { index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import * as auth from "./auth";
 
 export const workspace = pgTable(
 	"workspace",
@@ -41,8 +42,6 @@ export const teamInvite = pgTable(
 		index("teamInvite_token_idx").on(table.token),
 	]
 );
-
-import * as auth from "./auth";
 
 export const workspaceRelations = relations(workspace, ({ one, many }) => ({
 	owner: one(auth.user, {

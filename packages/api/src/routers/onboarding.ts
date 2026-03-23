@@ -5,15 +5,6 @@ import { nanoid } from "nanoid";
 import { z } from "zod";
 import { protectedProcedure } from "../index";
 
-function slugify(text: string): string {
-	return text
-		.toLowerCase()
-		.trim()
-		.replace(/[^\w\s-]/g, "")
-		.replace(/[\s_-]+/g, "-")
-		.replace(/^-+|-+$/g, "");
-}
-
 const INVITE_EXPIRY_DAYS = 7;
 
 export const onboardingRouter = {
@@ -21,10 +12,10 @@ export const onboardingRouter = {
 		.input(
 			z.object({
 				name: z.string().min(1).max(100),
+				slug: z.string().min(1).max(100),
 			})
 		)
 		.handler(async ({ input, context }) => {
-			const slug = slugify(input.name);
 			const userId = context.session.user.id;
 
 			const existing = await context.db
@@ -37,20 +28,20 @@ export const onboardingRouter = {
 			if (workspaceRecord) {
 				await context.db
 					.update(workspaceTable)
-					.set({ name: input.name, slug })
+					.set({ name: input.name, slug: input.slug })
 					.where(eq(workspaceTable.id, workspaceRecord.id));
-				return { id: workspaceRecord.id, slug, updated: true };
+				return { id: workspaceRecord.id, slug: input.slug, updated: true };
 			}
 
 			const id = nanoid();
 			await context.db.insert(workspaceTable).values({
 				id,
 				name: input.name,
-				slug,
+				slug: input.slug,
 				ownerId: userId,
 			});
 
-			return { id, slug, updated: false };
+			return { id, slug: input.slug, updated: false };
 		}),
 
 	getWorkspace: protectedProcedure.handler(async ({ context }) => {
