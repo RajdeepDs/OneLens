@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@onelens/ui/components/button";
 import { IconChevronLeftMedium } from "@onelens/ui/components/icons";
 import type { Route } from "next";
@@ -99,11 +98,8 @@ export default function WelcomePage() {
 			</div>
 			<div className="flex w-full items-center justify-between">
 				{canGoBack ? (
-					<Button
-						icon={<IconChevronLeftMedium />}
-						onClick={goBack}
-						variant="ghost"
-					>
+					<Button onClick={goBack} variant="ghost">
+						<IconChevronLeftMedium />
 						Back
 					</Button>
 				) : (

@@ -1,9 +1,9 @@
-export { AnimatedStepContent } from "./AnimatedStepContent";
-export { GitHubStep } from "./GitHubStep";
-export type { Step, StepId } from "./OnboardingWizard";
-export { STEPS, StepIndicator } from "./OnboardingWizard";
-export type { Repository } from "./RepositoryStep";
-export { RepositoryStep } from "./RepositoryStep";
-export type { TeamInvite } from "./TeamsStep";
-export { TeamsStep } from "./TeamsStep";
-export { WorkspaceStep } from "./WorkspaceStep";
+export { AnimatedStepContent } from "./animated-step-content";
+export { GitHubStep } from "./github-step";
+export type { Step, StepId } from "./onboarding-wizard";
+export { STEPS, StepIndicator } from "./onboarding-wizard";
+export type { Repository } from "./repository-step";
+export { RepositoryStep } from "./repository-step";
+export type { TeamInvite } from "./teams-step";
+export { TeamsStep } from "./teams-step";
+export { WorkspaceStep } from "./workspace-step";
