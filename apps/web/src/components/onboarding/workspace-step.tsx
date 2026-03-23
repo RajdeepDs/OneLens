@@ -35,18 +35,30 @@ export function WorkspaceStep({
 
 	return (
 		<motion.div
-			animate={{ opacity: 1, y: 0 }}
+			animate={{ opacity: 1 }}
 			className="flex w-full flex-col gap-6"
-			exit={{ opacity: 0, y: -8 }}
-			initial={{ opacity: 0, y: 12 }}
-			transition={{ duration: 0.2 }}
+			exit={{ opacity: 0 }}
+			initial={{ opacity: 0 }}
+			transition={{ duration: 0.25, ease: [0.2, 0, 0, 1] }}
 		>
-			<div className="flex flex-col gap-2">
-				<h2 className="text-title-small-semibold">Create your workspace</h2>
-				<p className="text-body-regular-spaced text-gray-11">
+			<motion.div
+				animate={{ opacity: 1 }}
+				initial={{ opacity: 0 }}
+				transition={{ duration: 0.2, delay: 0.05, ease: [0.2, 0, 0, 1] }}
+			>
+				<h2 className="balance text-wrap text-title-small-semibold">
+					Create your workspace
+				</h2>
+			</motion.div>
+			<motion.div
+				animate={{ opacity: 1 }}
+				initial={{ opacity: 0 }}
+				transition={{ duration: 0.2, delay: 0.1, ease: [0.2, 0, 0, 1] }}
+			>
+				<p className="pretty text-wrap text-body-regular-spaced text-gray-11">
 					Your workspace is where your team&apos;s pull requests live.
 				</p>
-			</div>
+			</motion.div>
 
 			<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 				<Field>
