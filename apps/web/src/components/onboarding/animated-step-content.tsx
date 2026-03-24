@@ -36,6 +36,7 @@ export function AnimatedStepContent({
 		<AnimatePresence custom={direction} initial={false} mode="wait">
 			<motion.div
 				animate="center"
+				className="w-full"
 				custom={direction}
 				exit="exit"
 				initial="enter"

@@ -1,23 +1,17 @@
 "use client";
 
 import { Button } from "@onelens/ui/components/button";
-import { FieldError, FieldLabel } from "@onelens/ui/components/field";
 import {
-	IconChainLink1,
-	IconCirclePlus,
-	IconLoader,
-	IconTrashCan,
+	IconCircleCheck,
+	IconSquareBehindSquare2,
 } from "@onelens/ui/components/icons";
 import { Input } from "@onelens/ui/components/input";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export interface TeamInvite {
 	acceptedAt?: Date;
-	email: string;
 	expiresAt: Date;
 	id: string;
 	token: string;
@@ -25,8 +19,7 @@ export interface TeamInvite {
 
 interface TeamsStepProps {
 	invites: TeamInvite[];
-	onCreateInvite: (email: string) => Promise<string>;
-	onDeleteInvite: (inviteId: string) => Promise<void>;
+	onCreateInvite: () => Promise<string>;
 	onNext: () => void;
 	onSkip?: () => void;
 }
@@ -36,46 +29,42 @@ export function TeamsStep({
 	onNext,
 	onSkip,
 	onCreateInvite,
-	onDeleteInvite,
 }: TeamsStepProps) {
-	const [email, setEmail] = useState("");
-	const [error, setError] = useState<string | null>(null);
+	const [copied, setCopied] = useState(false);
 	const [isCreating, setIsCreating] = useState(false);
 
-	const handleCreateInvite = async () => {
-		if (!EMAIL_REGEX.test(email)) {
-			setError("Please enter a valid email address");
-			return;
-		}
-
+	const handleCreateInvite = useCallback(async () => {
 		setIsCreating(true);
-		setError(null);
 
 		try {
-			await onCreateInvite(email);
-			setEmail("");
-			toast.success(`Invite sent to ${email}`);
+			await onCreateInvite();
 		} catch (err) {
-			setError(err instanceof Error ? err.message : "Failed to create invite");
+			toast.error(
+				err instanceof Error ? err.message : "Failed to create invite"
+			);
 		} finally {
 			setIsCreating(false);
 		}
-	};
+	}, [onCreateInvite]);
 
-	const handleDeleteInvite = async (inviteId: string) => {
-		try {
-			await onDeleteInvite(inviteId);
-			toast.success("Invite removed");
-		} catch {
-			toast.error("Failed to remove invite");
+	useEffect(() => {
+		if (invites.length === 0 && !isCreating) {
+			handleCreateInvite();
 		}
-	};
+	}, [invites.length, isCreating, handleCreateInvite]);
 
-	const copyInviteLink = (token: string) => {
+	const handleCopyInviteLink = (token: string) => {
 		const link = `${typeof window !== "undefined" ? window.location.origin : ""}/invite/${token}`;
 		navigator.clipboard.writeText(link);
+		setCopied(true);
 		toast.success("Invite link copied to clipboard");
+
+		setTimeout(() => {
+			setCopied(false);
+		}, 2000);
 	};
+
+	const currentInvite = invites[0];
 
 	return (
 		<motion.div
@@ -86,87 +75,34 @@ export function TeamsStep({
 			transition={{ duration: 0.2 }}
 		>
 			<div className="flex flex-col gap-2">
-				<h2 className="font-medium text-lg leading-snug">Invite your team</h2>
-				<p className="text-muted-foreground text-sm">
-					Send invite links to your teammates so they can join your workspace.
+				<h2 className="text-title-small-semibold">Invite your team</h2>
+				<p className="text-body-small-spaced text-gray-11">
+					Share this link with your teammates.
 				</p>
 			</div>
 
-			<div className="flex flex-col gap-3">
-				<div className="flex gap-2">
-					<div className="flex flex-1 flex-col gap-1">
-						<FieldLabel htmlFor="invite-email">Email address</FieldLabel>
-						<Input
-							aria-invalid={!!error}
-							disabled={isCreating}
-							id="invite-email"
-							onChange={(e) => {
-								setEmail(e.target.value);
-								if (error) {
-									setError(null);
-								}
-							}}
-							placeholder="colleague@company.com"
-							type="email"
-							value={email}
-						/>
-						{error && <FieldError>{error}</FieldError>}
-					</div>
-					<Button
-						className="mt-5 h-10 shrink-0"
-						disabled={!email || isCreating}
-						icon={
-							isCreating ? (
-								<IconLoader className="animate-spin" />
-							) : (
-								<IconCirclePlus />
-							)
-						}
-						onClick={handleCreateInvite}
-					>
-						Invite
-					</Button>
-				</div>
+			<div className="flex w-full items-center gap-2">
+				<Input
+					className="h-8 w-full"
+					disabled
+					readOnly
+					tabIndex={-1}
+					value={
+						currentInvite
+							? `${typeof window !== "undefined" ? window.location.origin : ""}/invite/${currentInvite.token}`
+							: "Generating invite link..."
+					}
+				/>
+				<Button
+					disabled={!currentInvite || copied}
+					onClick={() =>
+						currentInvite && handleCopyInviteLink(currentInvite.token)
+					}
+					size="icon"
+				>
+					{copied ? <IconCircleCheck /> : <IconSquareBehindSquare2 />}
+				</Button>
 			</div>
-
-			{invites.length > 0 && (
-				<div className="flex flex-col gap-2">
-					<span className="font-medium text-sm">Pending invites</span>
-					<div className="flex max-h-48 flex-col gap-1 overflow-y-auto">
-						{invites.map((invite) => (
-							<div
-								className="flex items-center gap-3 rounded-lg border border-border bg-card p-3"
-								key={invite.id}
-							>
-								<div className="flex min-w-0 flex-1 flex-col gap-0.5">
-									<span className="truncate font-medium text-sm">
-										{invite.email}
-									</span>
-									<span className="text-muted-foreground text-xs">
-										Invited {new Date(invite.expiresAt).toLocaleDateString()}
-									</span>
-								</div>
-								<Button
-									onClick={() => copyInviteLink(invite.token)}
-									size="icon-sm"
-									title="Copy invite link"
-									variant="ghost"
-								>
-									<IconChainLink1 />
-								</Button>
-								<Button
-									onClick={() => handleDeleteInvite(invite.id)}
-									size="icon-sm"
-									title="Remove invite"
-									variant="ghost"
-								>
-									<IconTrashCan />
-								</Button>
-							</div>
-						))}
-					</div>
-				</div>
-			)}
 
 			<div className="flex flex-col gap-3">
 				<Button className="h-10 w-full" onClick={onNext}>

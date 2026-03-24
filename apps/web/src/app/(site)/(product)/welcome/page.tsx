@@ -23,18 +23,17 @@ export default function WelcomePage() {
 		direction,
 		workspaceName,
 		repositories,
-		selectedRepoIds,
+		selectedRepoId,
 		teamInvites,
 		isWorkspaceLoading,
 		goNext,
 		goBack,
 		saveWorkspace,
-		skipGitHub,
 		setRepositories,
-		setSelectedRepoIds,
+		setSelectedRepoId,
 		skipRepositories,
 		createInvite,
-		deleteInvite,
+		complete,
 	} = useOnboarding({
 		onComplete: () => {
 			router.push("/dashboard" as Route);
@@ -63,16 +62,15 @@ export default function WelcomePage() {
 					/>
 				);
 			case 1:
-				return <GitHubStep onNext={handleGitHubNext} onSkip={skipGitHub} />;
+				return <GitHubStep onNext={handleGitHubNext} />;
 			case 2:
 				return (
 					<RepositoryStep
 						isLoading={isReposLoading && repositories.length === 0}
 						onNext={skipRepositories}
-						onSelectionChange={setSelectedRepoIds}
-						onSkip={skipRepositories}
+						onSelectionChange={setSelectedRepoId}
 						repositories={repositories}
-						selectedIds={selectedRepoIds}
+						selectedId={selectedRepoId}
 					/>
 				);
 			case 3:
@@ -80,8 +78,7 @@ export default function WelcomePage() {
 					<TeamsStep
 						invites={teamInvites}
 						onCreateInvite={createInvite}
-						onDeleteInvite={deleteInvite}
-						onNext={goNext}
+						onNext={complete}
 						onSkip={goNext}
 					/>
 				);
@@ -92,7 +89,7 @@ export default function WelcomePage() {
 
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-between gap-8 pt-36 pb-12">
-			<div className="flex h-full flex-1">
+			<div className="flex h-full w-full flex-1">
 				<AnimatedStepContent direction={direction} stepKey={currentStep}>
 					{renderStep()}
 				</AnimatedStepContent>

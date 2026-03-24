@@ -115,7 +115,6 @@ export const onboardingRouter = {
 		.input(
 			z.object({
 				workspaceId: z.string(),
-				email: z.string().email(),
 			})
 		)
 		.handler(async ({ input, context }) => {
@@ -126,7 +125,6 @@ export const onboardingRouter = {
 			await context.db.insert(teamInvite).values({
 				id: nanoid(),
 				workspaceId: input.workspaceId,
-				email: input.email,
 				token,
 				expiresAt,
 			});

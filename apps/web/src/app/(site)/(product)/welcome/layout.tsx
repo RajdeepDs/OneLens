@@ -23,7 +23,7 @@ export default function WelcomeLayout({ children }: { children: ReactNode }) {
 					Log out
 				</Button>
 			</header>
-			<main className="mx-auto max-w-lg flex-1 items-center justify-center px-6">
+			<main className="flex-1 items-center justify-center px-6 sm:mx-auto sm:w-lg">
 				{children}
 			</main>
 		</div>

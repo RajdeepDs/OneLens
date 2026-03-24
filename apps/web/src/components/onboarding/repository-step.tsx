@@ -19,19 +19,17 @@ export interface Repository {
 interface RepositoryStepProps {
 	isLoading?: boolean;
 	onNext: () => void;
-	onSelectionChange: (ids: number[]) => void;
-	onSkip?: () => void;
+	onSelectionChange: (id: number | null) => void;
 	repositories: Repository[];
-	selectedIds: number[];
+	selectedId: number | null;
 }
 
 export function RepositoryStep({
 	repositories,
 	isLoading = false,
-	selectedIds,
+	selectedId,
 	onSelectionChange,
 	onNext,
-	onSkip,
 }: RepositoryStepProps) {
 	const [search, setSearch] = useState("");
 
@@ -46,18 +44,10 @@ export function RepositoryStep({
 	}, [repositories, search]);
 
 	const handleToggle = (id: number) => {
-		if (selectedIds.includes(id)) {
-			onSelectionChange(selectedIds.filter((repoId) => repoId !== id));
+		if (selectedId === id) {
+			onSelectionChange(null);
 		} else {
-			onSelectionChange([...selectedIds, id]);
-		}
-	};
-
-	const handleSelectAll = () => {
-		if (selectedIds.length === filteredRepos.length) {
-			onSelectionChange([]);
-		} else {
-			onSelectionChange(filteredRepos.map((repo) => repo.id));
+			onSelectionChange(id);
 		}
 	};
 
@@ -70,11 +60,9 @@ export function RepositoryStep({
 			transition={{ duration: 0.2 }}
 		>
 			<div className="flex flex-col gap-2">
-				<h2 className="font-medium text-lg leading-snug">
-					Select repositories
-				</h2>
-				<p className="text-muted-foreground text-sm">
-					Choose which repositories you want to track for pull request reviews.
+				<h2 className="text-title-small-semibold">Select a repository</h2>
+				<p className="text-body-small-spaced text-gray-11">
+					Choose a repository to track for pull request reviews.
 				</p>
 			</div>
 
@@ -88,7 +76,7 @@ export function RepositoryStep({
 				/>
 			</div>
 
-			<div className="flex max-h-80 flex-col gap-1 overflow-y-auto">
+			<div className="flex max-h-36 flex-col gap-1 overflow-y-auto">
 				{isLoading &&
 					[1, 2, 3, 4, 5].map((i) => (
 						<div className="flex items-center gap-3 p-2" key={i}>
@@ -99,7 +87,7 @@ export function RepositoryStep({
 
 				{!isLoading && filteredRepos.length === 0 && (
 					<div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
-						<p className="text-muted-foreground text-sm">
+						<p className="text-body-mini-regular text-gray-11">
 							{search ? "No repositories found" : "No repositories available"}
 						</p>
 					</div>
@@ -108,15 +96,9 @@ export function RepositoryStep({
 				{!isLoading && filteredRepos.length > 0 && (
 					<>
 						<div className="flex items-center gap-2 px-2 pb-2">
-							<Checkbox
-								checked={
-									selectedIds.length === filteredRepos.length &&
-									filteredRepos.length > 0
-								}
-								onCheckedChange={handleSelectAll}
-							/>
-							<span className="text-muted-foreground text-xs">
-								Select all ({filteredRepos.length})
+							<span className="text-body-mini-regular text-gray-11">
+								{filteredRepos.length} repository
+								{filteredRepos.length !== 1 ? "ies" : ""} available
 							</span>
 						</div>
 						{filteredRepos.map((repo) => (
@@ -126,21 +108,21 @@ export function RepositoryStep({
 								key={repo.id}
 							>
 								<Checkbox
-									checked={selectedIds.includes(repo.id)}
+									checked={selectedId === repo.id}
 									id={`repo-${repo.id}`}
 									onCheckedChange={() => handleToggle(repo.id)}
 								/>
 								<div className="flex min-w-0 flex-1 flex-col gap-0.5">
-									<span className="truncate font-medium text-sm">
+									<span className="truncate text-body-regular-medium">
 										{repo.fullName}
 									</span>
 									<div className="flex items-center gap-2">
 										{repo.isPrivate && (
-											<span className="rounded bg-muted px-1.5 py-0.5 font-medium text-[10px] text-muted-foreground uppercase">
+											<span className="rounded bg-muted px-1.5 py-0.5 font-medium text-body-micro-medium uppercase">
 												Private
 											</span>
 										)}
-										<span className="text-muted-foreground text-xs">
+										<span className="text-body-mini-regular text-gray-11">
 											{repo.defaultBranch}
 										</span>
 									</div>
@@ -151,25 +133,13 @@ export function RepositoryStep({
 				)}
 			</div>
 
-			<div className="flex flex-col gap-3">
-				<Button
-					className="h-10 w-full"
-					disabled={selectedIds.length === 0}
-					onClick={onNext}
-				>
-					Continue {selectedIds.length > 0 && `(${selectedIds.length})`}
-				</Button>
-
-				{onSkip && (
-					<Button
-						className="h-10 w-full text-muted-foreground"
-						onClick={onSkip}
-						variant="ghost"
-					>
-						Skip for now
-					</Button>
-				)}
-			</div>
+			<Button
+				className="h-10 w-full"
+				disabled={selectedId === null}
+				onClick={onNext}
+			>
+				Continue
+			</Button>
 		</motion.div>
 	);
 }

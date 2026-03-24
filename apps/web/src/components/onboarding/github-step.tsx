@@ -10,10 +10,9 @@ import { authClient } from "@/lib/auth-client";
 
 interface GitHubStepProps {
 	onNext: () => void;
-	onSkip?: () => void;
 }
 
-export function GitHubStep({ onNext, onSkip }: GitHubStepProps) {
+export function GitHubStep({ onNext }: GitHubStepProps) {
 	const { data: session, isPending } = authClient.useSession();
 	const router = useRouter();
 	const isConnected = !!session?.user;
@@ -47,7 +46,7 @@ export function GitHubStep({ onNext, onSkip }: GitHubStepProps) {
 
 		if (isConnected) {
 			return (
-				<div className="flex items-center gap-3">
+				<div className="flex w-full items-center gap-3">
 					<div className="relative size-10 overflow-hidden rounded-full bg-muted">
 						{session?.user?.image && (
 							<Image
@@ -60,10 +59,10 @@ export function GitHubStep({ onNext, onSkip }: GitHubStepProps) {
 						)}
 					</div>
 					<div className="flex flex-col gap-0.5">
-						<span className="font-medium text-sm">
+						<span className="text-body-regular-medium">
 							{session?.user?.name || "GitHub User"}
 						</span>
-						<span className="text-muted-foreground text-xs">
+						<span className="text-body-mini-regular text-muted-foreground">
 							{session?.user?.email}
 						</span>
 					</div>
@@ -80,8 +79,10 @@ export function GitHubStep({ onNext, onSkip }: GitHubStepProps) {
 					<GitHub className="size-5" />
 				</div>
 				<div className="flex flex-col gap-0.5">
-					<span className="font-medium text-sm">GitHub</span>
-					<span className="text-muted-foreground text-xs">Not connected</span>
+					<span className="text-body-regular-medium">GitHub</span>
+					<span className="text-body-small-regular text-gray-11">
+						Not connected
+					</span>
 				</div>
 			</div>
 		);
@@ -96,45 +97,32 @@ export function GitHubStep({ onNext, onSkip }: GitHubStepProps) {
 			transition={{ duration: 0.2 }}
 		>
 			<div className="flex flex-col gap-2">
-				<h2 className="font-medium text-lg leading-snug">Connect GitHub</h2>
-				<p className="text-muted-foreground text-sm">
-					Connect your GitHub account to access repositories and track pull
-					requests.
+				<h2 className="text-title-small-semibold">Connect GitHub</h2>
+				<p className="text-body-small-spaced text-gray-11">
+					Connect GitHub to power your workspace.
 				</p>
 			</div>
 
-			<Card>
-				<CardContent className="flex flex-col gap-4 p-4">
+			<Card className="w-full">
+				<CardContent className="flex flex-col gap-4 px-4">
 					{renderConnectionStatus()}
 				</CardContent>
 			</Card>
 
-			<div className="flex flex-col gap-3">
-				{isConnected ? (
-					<Button className="h-10 w-full" onClick={handleContinue}>
-						Continue
-					</Button>
-				) : (
-					<Button
-						className="h-10 w-full"
-						icon={<GitHub />}
-						onClick={handleConnect}
-						variant="outline"
-					>
-						Connect GitHub
-					</Button>
-				)}
-
-				{onSkip && (
-					<Button
-						className="h-10 w-full text-muted-foreground"
-						onClick={onSkip}
-						variant="ghost"
-					>
-						Skip for now
-					</Button>
-				)}
-			</div>
+			{isConnected ? (
+				<Button className="h-10 w-full" onClick={handleContinue}>
+					Continue
+				</Button>
+			) : (
+				<Button
+					className="h-10 w-full"
+					icon={<GitHub />}
+					onClick={handleConnect}
+					variant="outline"
+				>
+					Connect GitHub
+				</Button>
+			)}
 		</motion.div>
 	);
 }

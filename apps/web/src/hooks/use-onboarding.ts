@@ -15,7 +15,7 @@ interface UseOnboardingOptions {
 
 interface UseOnboardingReturn {
 	complete: () => void;
-	createInvite: (email: string) => Promise<string>;
+	createInvite: () => Promise<string>;
 	currentStep: number;
 	deleteInvite: (inviteId: string) => Promise<void>;
 	direction: number;
@@ -25,10 +25,9 @@ interface UseOnboardingReturn {
 	isWorkspaceLoading: boolean;
 	repositories: Repository[];
 	saveWorkspace: (data: { name: string; slug: string }) => void;
-	selectedRepoIds: number[];
+	selectedRepoId: number | null;
 	setRepositories: (repos: Repository[]) => void;
-	setSelectedRepoIds: (ids: number[]) => void;
-	skipGitHub: () => void;
+	setSelectedRepoId: (id: number | null) => void;
 	skipRepositories: () => void;
 	teamInvites: TeamInvite[];
 	workspaceId: string | null;
@@ -45,7 +44,7 @@ export function useOnboarding({
 	const [workspaceId, setWorkspaceId] = useState<string | null>(null);
 	const [workspaceName, setWorkspaceName] = useState("");
 	const [repositories, setRepositories] = useState<Repository[]>([]);
-	const [selectedRepoIds, setSelectedRepoIds] = useState<number[]>([]);
+	const [selectedRepoId, setSelectedRepoId] = useState<number | null>(null);
 	const [teamInvites, setTeamInvites] = useState<TeamInvite[]>([]);
 
 	const goNext = useCallback(() => {
@@ -62,7 +61,6 @@ export function useOnboarding({
 		orpc.saveWorkspace.mutationOptions({
 			onSuccess: (data) => {
 				setWorkspaceId(data.id);
-				toast.success("Workspace created!");
 				goNext();
 			},
 			onError: (error) => {
@@ -73,6 +71,9 @@ export function useOnboarding({
 
 	const saveRepositoriesMutation = useMutation(
 		orpc.saveRepositories.mutationOptions({
+			onSuccess: () => {
+				goNext();
+			},
 			onError: () => {
 				goNext();
 			},
@@ -81,17 +82,15 @@ export function useOnboarding({
 
 	const createInviteMutation = useMutation(
 		orpc.createTeamInvite.mutationOptions({
-			onSuccess: (data, variables) => {
+			onSuccess: (data) => {
 				setTeamInvites((prev) => [
 					...prev,
 					{
 						id: crypto.randomUUID(),
-						email: variables.email,
 						token: data.token,
 						expiresAt: data.expiresAt,
 					},
 				]);
-				toast.success(`Invite sent to ${variables.email}`);
 			},
 			onError: (error) => {
 				toast.error(error.message || "Failed to create invite");
@@ -118,34 +117,26 @@ export function useOnboarding({
 		[saveWorkspaceMutation]
 	);
 
-	const skipGitHub = useCallback(() => {
-		goNext();
-	}, [goNext]);
-
 	const skipRepositories = useCallback(() => {
-		if (workspaceId && selectedRepoIds.length > 0) {
+		if (workspaceId && selectedRepoId !== null) {
 			saveRepositoriesMutation.mutate({
 				workspaceId,
-				repositoryIds: selectedRepoIds,
+				repositoryIds: [selectedRepoId],
 			});
 		} else {
 			goNext();
 		}
-	}, [workspaceId, selectedRepoIds, saveRepositoriesMutation, goNext]);
+	}, [workspaceId, selectedRepoId, saveRepositoriesMutation, goNext]);
 
-	const createInvite = useCallback(
-		async (email: string): Promise<string> => {
-			if (!workspaceId) {
-				throw new Error("No workspace created");
-			}
-			const result = await createInviteMutation.mutateAsync({
-				workspaceId,
-				email,
-			});
-			return result.token;
-		},
-		[workspaceId, createInviteMutation]
-	);
+	const createInvite = useCallback(async (): Promise<string> => {
+		if (!workspaceId) {
+			throw new Error("No workspace created");
+		}
+		const result = await createInviteMutation.mutateAsync({
+			workspaceId,
+		});
+		return result.token;
+	}, [workspaceId, createInviteMutation]);
 
 	const deleteInvite = useCallback(
 		async (inviteId: string): Promise<void> => {
@@ -165,16 +156,15 @@ export function useOnboarding({
 		workspaceId,
 		workspaceName,
 		repositories,
-		selectedRepoIds,
+		selectedRepoId,
 		teamInvites,
 		isWorkspaceLoading: saveWorkspaceMutation.isPending,
 		isReposLoading: saveRepositoriesMutation.isPending,
 		goNext,
 		goBack,
 		saveWorkspace,
-		skipGitHub,
 		setRepositories,
-		setSelectedRepoIds,
+		setSelectedRepoId,
 		skipRepositories,
 		createInvite,
 		deleteInvite,
