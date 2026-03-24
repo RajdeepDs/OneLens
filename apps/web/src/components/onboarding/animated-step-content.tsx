@@ -5,19 +5,16 @@ import type { ReactNode } from "react";
 
 const slideVariants: Variants = {
 	enter: (direction: number) => ({
-		x: direction > 0 ? 80 : -80,
+		y: direction > 0 ? 24 : -24,
 		opacity: 0,
-		filter: "blur(4px)",
 	}),
 	center: {
-		x: 0,
+		y: 0,
 		opacity: 1,
-		filter: "blur(0px)",
 	},
 	exit: (direction: number) => ({
-		x: direction < 0 ? 80 : -80,
+		y: direction < 0 ? 24 : -24,
 		opacity: 0,
-		filter: "blur(4px)",
 	}),
 };
 
@@ -42,10 +39,8 @@ export function AnimatedStepContent({
 				initial="enter"
 				key={stepKey}
 				transition={{
-					type: "spring",
-					stiffness: 200,
-					damping: 25,
-					bounce: 0,
+					duration: 0.18,
+					ease: [0.25, 0.1, 0.25, 1],
 				}}
 				variants={slideVariants}
 			>
