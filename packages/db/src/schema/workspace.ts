@@ -30,7 +30,6 @@ export const teamInvite = pgTable(
 		workspaceId: text("workspace_id")
 			.notNull()
 			.references(() => workspace.id, { onDelete: "cascade" }),
-		email: text("email").notNull(),
 		token: text("token").notNull().unique(),
 		expiresAt: timestamp("expires_at").notNull(),
 		acceptedAt: timestamp("accepted_at"),
@@ -38,7 +37,6 @@ export const teamInvite = pgTable(
 	},
 	(table) => [
 		index("teamInvite_workspaceId_idx").on(table.workspaceId),
-		index("teamInvite_email_idx").on(table.email),
 		index("teamInvite_token_idx").on(table.token),
 	]
 );
