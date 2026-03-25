@@ -4,9 +4,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { parsers } from "@/components/onboarding/onboarding-params";
 import type { Repository } from "@/components/onboarding/repository-step";
 import type { TeamInvite } from "@/components/onboarding/teams-step";
+import { parsers } from "@/utils/onboarding-params";
 import { client, orpc } from "@/utils/orpc";
 
 interface UseOnboardingOptions {

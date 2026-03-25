@@ -69,7 +69,6 @@ export function WorkspaceStep({
 								setError(null);
 							}
 						}}
-						placeholder="Acme Corp"
 						value={name}
 					/>
 					{error && <FieldError>{error}</FieldError>}
@@ -82,7 +81,6 @@ export function WorkspaceStep({
 							className="h-10 ps-33.5"
 							disabled
 							id="workspace-slug"
-							placeholder="acme-corp"
 							value={slug}
 						/>
 						<span className="pointer-events-none absolute inset-s-0 inset-y-0 flex items-center justify-center ps-3 text-body-small-spaced text-gray-11 peer-disabled:opacity-50">

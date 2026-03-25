@@ -107,8 +107,8 @@ export function GitHubStep({ onNext }: GitHubStepProps) {
 				</p>
 			</div>
 
-			<Card className="w-full">
-				<CardContent className="flex flex-col gap-4 px-4">
+			<Card className="-mx-6">
+				<CardContent className="flex flex-col gap-4 px-6">
 					{renderConnectionStatus()}
 				</CardContent>
 			</Card>
