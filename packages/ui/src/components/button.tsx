@@ -10,7 +10,7 @@ import { Kbd, KbdGroup } from "./kbd"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-[13px] font-normal whitespace-nowrap outline-none select-none transition-transform duration-160 ease-out focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-[13px] font-normal whitespace-nowrap outline-none select-none transition-transform duration-160 ease-out focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.96] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -120,14 +120,14 @@ function Button({ className, variant = "default", size = "default", shortcut, to
         data-icon={icon ? true : undefined}
         className={cn(
           buttonVariants({ variant, size, className }),
-          normalizedShortcut && "relative",
+          normalizedShortcut || icon && "relative",
         )}
         {...props}
       >
         {icon && cloneElement(icon, {
           className: cn("pointer-events-none absolute top-1/2 left-2.5 size-5 -translate-y-1/2", icon.props.className),
         })}
-        <span>{children}</span>
+        {children}
         {renderShortcut(normalizedShortcut)}
       </ButtonPrimitive>
     </MaybeTooltip>

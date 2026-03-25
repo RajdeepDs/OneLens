@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure } from "../index";
+import { onboardingRouter } from "./onboarding";
 
 export const appRouter = {
 	healthCheck: publicProcedure.handler(() => {
@@ -35,6 +36,7 @@ export const appRouter = {
 
 			return { success: true, message: "You've been added to the waitlist!" };
 		}),
+	...onboardingRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;

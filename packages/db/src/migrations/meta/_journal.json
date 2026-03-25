@@ -15,6 +15,27 @@
       "when": 1773930242530,
       "tag": "0001_fearless_wendell_vaughn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774278509458,
+      "tag": "0002_groovy_dazzler",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1774367003896,
+      "tag": "0003_salty_doctor_octopus",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1774424777795,
+      "tag": "0004_foamy_albert_cleary",
+      "breakpoints": true
     }
   ]
 }
