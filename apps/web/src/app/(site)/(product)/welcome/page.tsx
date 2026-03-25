@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { WelcomeClient } from "@/components/onboarding/welcome-client";
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function WelcomePage() {
-	return <WelcomeClient />;
+	return (
+		<Suspense fallback={null}>
+			<WelcomeClient />
+		</Suspense>
+	);
 }
