@@ -4,6 +4,7 @@ import { Button } from "@onelens/ui/components/button";
 import { IconChevronLeftMedium } from "@onelens/ui/components/icons";
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 import {
 	AnimatedStepContent,
 	GitHubStep,
@@ -15,7 +16,7 @@ import {
 } from "@/components/onboarding";
 import { useGitHubRepos, useOnboarding } from "@/hooks";
 
-export default function WelcomePage() {
+function WelcomeContent() {
 	const router = useRouter();
 
 	const {
@@ -112,5 +113,13 @@ export default function WelcomePage() {
 				<StepIndicator currentStep={currentStep} totalSteps={STEPS.length} />
 			</div>
 		</div>
+	);
+}
+
+export default function WelcomePage() {
+	return (
+		<Suspense fallback={null}>
+			<WelcomeContent />
+		</Suspense>
 	);
 }
