@@ -1,7 +1,7 @@
-import { Button } from "@onelens/ui/components/button";
 import type { Route } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { LogoutButton } from "@/components/onboarding/logout-button";
 import { UserHeader } from "@/components/onboarding/user-header";
 import Logo from "@/components/ui/logo";
 
@@ -16,12 +16,7 @@ export default function WelcomeLayout({ children }: { children: ReactNode }) {
 				>
 					<Logo className="size-6 text-gray-8" />
 				</Link>
-				<Button
-					className="absolute top-1/2 right-0 -translate-x-1/2 -translate-y-1/2"
-					variant={"ghost"}
-				>
-					Log out
-				</Button>
+				<LogoutButton />
 			</header>
 			<main className="flex-1 items-center justify-center px-6 sm:mx-auto sm:w-lg">
 				{children}

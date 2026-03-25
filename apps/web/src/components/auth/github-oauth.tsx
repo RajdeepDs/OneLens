@@ -4,6 +4,7 @@ import { Button } from "@onelens/ui/components/button";
 import { GitHub, IconLoader } from "@onelens/ui/components/icons";
 import { useGlobalHotkeys } from "@onelens/ui/hooks/use-global-hotkeys";
 import { AnimatePresence, motion } from "motion/react";
+import type { Route } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -71,6 +72,7 @@ function AuthErrorToast() {
 
 export function GitHubOAuthContainer() {
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 
 	const signIn = async (): Promise<void> => {
 		if (isLoading) {
@@ -85,6 +87,21 @@ export function GitHubOAuthContainer() {
 			if (result?.error) {
 				toast.error(result.error.message || DEFAULT_SIGN_IN_ERROR_MESSAGE);
 				setIsLoading(false);
+			} else {
+				// Get current session to check onboarding status
+				const session = await authClient.getSession();
+
+				if (session?.data?.user) {
+					const onboardingCompleted = (
+						session.data.user as Record<string, unknown>
+					).onboardingCompleted;
+
+					if (onboardingCompleted) {
+						router.push("/dashboard" as Route);
+					} else {
+						router.push("/welcome" as Route);
+					}
+				}
 			}
 		} catch (error: unknown) {
 			toast.error(getErrorMessage(error));

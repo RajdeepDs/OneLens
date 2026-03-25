@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { Repository } from "@/components/onboarding/RepositoryStep";
+import type { Repository } from "@/components/onboarding";
 import { client } from "@/utils/orpc";
 
 const GITHUB_REPOS_STALE_TIME = 5 * 60 * 1000;
