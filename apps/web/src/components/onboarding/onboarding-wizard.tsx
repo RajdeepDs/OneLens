@@ -28,7 +28,7 @@ export const STEPS: Step[] = [
 		id: "repository",
 		title: "Repository",
 		description: "Select repositories to track",
-		skipable: true,
+		skipable: false,
 	},
 	{
 		id: "teams",

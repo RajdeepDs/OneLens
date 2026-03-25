@@ -1,13 +1,13 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { parsers } from "@/components/onboarding/onboarding-params";
 import type { Repository } from "@/components/onboarding/repository-step";
 import type { TeamInvite } from "@/components/onboarding/teams-step";
-import { orpc } from "@/utils/orpc";
+import { client, orpc } from "@/utils/orpc";
 
 interface UseOnboardingOptions {
 	onComplete?: () => void;
@@ -22,6 +22,7 @@ interface UseOnboardingReturn {
 	goBack: () => void;
 	goNext: () => void;
 	isReposLoading: boolean;
+	isWorkspaceFetching: boolean;
 	isWorkspaceLoading: boolean;
 	repositories: Repository[];
 	saveWorkspace: (data: { name: string; slug: string }) => void;
@@ -46,6 +47,35 @@ export function useOnboarding({
 	const [repositories, setRepositories] = useState<Repository[]>([]);
 	const [selectedRepoId, setSelectedRepoId] = useState<number | null>(null);
 	const [teamInvites, setTeamInvites] = useState<TeamInvite[]>([]);
+
+	const { data: existingWorkspace, isLoading: isWorkspaceFetching } = useQuery({
+		queryKey: ["workspace"],
+		queryFn: () => client.getWorkspace({}),
+	});
+
+	useEffect(() => {
+		if (existingWorkspace) {
+			setWorkspaceId(existingWorkspace.id);
+			setWorkspaceName(existingWorkspace.name);
+		}
+	}, [existingWorkspace]);
+
+	const { data: existingInvites } = useQuery({
+		queryKey: ["teamInvites", workspaceId],
+		queryFn: () => {
+			if (!workspaceId) {
+				return [];
+			}
+			return client.getTeamInvites({ workspaceId });
+		},
+		enabled: !!workspaceId,
+	});
+
+	useEffect(() => {
+		if (existingInvites && existingInvites.length > 0) {
+			setTeamInvites(existingInvites);
+		}
+	}, [existingInvites]);
 
 	const goNext = useCallback(() => {
 		setDirection(1);
@@ -132,11 +162,20 @@ export function useOnboarding({
 		if (!workspaceId) {
 			throw new Error("No workspace created");
 		}
+
+		const validInvite = existingInvites?.find(
+			(invite) => new Date(invite.expiresAt) > new Date()
+		);
+
+		if (validInvite) {
+			return validInvite.token;
+		}
+
 		const result = await createInviteMutation.mutateAsync({
 			workspaceId,
 		});
 		return result.token;
-	}, [workspaceId, createInviteMutation]);
+	}, [workspaceId, existingInvites, createInviteMutation]);
 
 	const deleteInvite = useCallback(
 		async (inviteId: string): Promise<void> => {
@@ -146,9 +185,20 @@ export function useOnboarding({
 		[deleteInviteMutation]
 	);
 
+	const completeMutation = useMutation(
+		orpc.completeOnboarding.mutationOptions({
+			onSuccess: () => {
+				onComplete?.();
+			},
+			onError: (error) => {
+				toast.error(error.message || "Failed to complete onboarding");
+			},
+		})
+	);
+
 	const complete = useCallback(() => {
-		onComplete?.();
-	}, [onComplete]);
+		completeMutation.mutate({});
+	}, [completeMutation]);
 
 	return {
 		currentStep,
@@ -159,6 +209,7 @@ export function useOnboarding({
 		selectedRepoId,
 		teamInvites,
 		isWorkspaceLoading: saveWorkspaceMutation.isPending,
+		isWorkspaceFetching,
 		isReposLoading: saveRepositoriesMutation.isPending,
 		goNext,
 		goBack,

@@ -5,7 +5,8 @@ import { Card, CardContent } from "@onelens/ui/components/card";
 import { GitHub } from "@onelens/ui/components/icons";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
 interface GitHubStepProps {
@@ -14,14 +15,17 @@ interface GitHubStepProps {
 
 export function GitHubStep({ onNext }: GitHubStepProps) {
 	const { data: session, isPending } = authClient.useSession();
-	const router = useRouter();
+	const [isConnecting, setIsConnecting] = useState(false);
 	const isConnected = !!session?.user;
 
 	const handleConnect = async () => {
+		setIsConnecting(true);
 		try {
 			await authClient.signIn.social({ provider: "github" });
 		} catch {
-			router.push("/login");
+			toast.error("Failed to connect GitHub. Please try again.");
+		} finally {
+			setIsConnecting(false);
 		}
 	};
 
@@ -116,11 +120,12 @@ export function GitHubStep({ onNext }: GitHubStepProps) {
 			) : (
 				<Button
 					className="h-10 w-full"
+					disabled={isConnecting}
 					icon={<GitHub />}
 					onClick={handleConnect}
 					variant="outline"
 				>
-					Connect GitHub
+					{isConnecting ? "Connecting..." : "Connect GitHub"}
 				</Button>
 			)}
 		</motion.div>

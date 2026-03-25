@@ -26,6 +26,7 @@ export default function WelcomePage() {
 		selectedRepoId,
 		teamInvites,
 		isWorkspaceLoading,
+		isWorkspaceFetching,
 		goNext,
 		goBack,
 		saveWorkspace,
@@ -40,12 +41,16 @@ export default function WelcomePage() {
 		},
 	});
 
-	const { data: fetchedRepos, isLoading: isReposLoading } = useGitHubRepos();
+	const {
+		data: fetchedRepos,
+		isLoading: isReposLoading,
+		error: reposError,
+	} = useGitHubRepos();
 
 	const canGoBack = currentStep > 0;
 
 	const handleGitHubNext = () => {
-		if (fetchedRepos && fetchedRepos.length > 0) {
+		if (fetchedRepos) {
 			setRepositories(fetchedRepos);
 		}
 		goNext();
@@ -66,6 +71,7 @@ export default function WelcomePage() {
 			case 2:
 				return (
 					<RepositoryStep
+						error={reposError?.message}
 						isLoading={isReposLoading && repositories.length === 0}
 						onNext={skipRepositories}
 						onSelectionChange={setSelectedRepoId}
@@ -77,9 +83,9 @@ export default function WelcomePage() {
 				return (
 					<TeamsStep
 						invites={teamInvites}
+						isLoading={isWorkspaceFetching}
 						onCreateInvite={createInvite}
 						onNext={complete}
-						onSkip={goNext}
 					/>
 				);
 			default:

@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export interface TeamInvite {
-	acceptedAt?: Date;
+	acceptedAt?: Date | null;
 	expiresAt: Date;
 	id: string;
 	token: string;
@@ -19,52 +19,76 @@ export interface TeamInvite {
 
 interface TeamsStepProps {
 	invites: TeamInvite[];
+	isLoading?: boolean;
 	onCreateInvite: () => Promise<string>;
 	onNext: () => void;
-	onSkip?: () => void;
 }
 
 export function TeamsStep({
 	invites,
+	isLoading,
 	onNext,
-	onSkip,
 	onCreateInvite,
 }: TeamsStepProps) {
 	const [copied, setCopied] = useState(false);
 	const [isCreating, setIsCreating] = useState(false);
+	const [createError, setCreateError] = useState<string | null>(null);
 
 	const handleCreateInvite = useCallback(async () => {
 		setIsCreating(true);
+		setCreateError(null);
 
 		try {
 			await onCreateInvite();
 		} catch (err) {
-			toast.error(
-				err instanceof Error ? err.message : "Failed to create invite"
-			);
+			const message =
+				err instanceof Error ? err.message : "Failed to create invite";
+			setCreateError(message);
+			toast.error(message);
 		} finally {
 			setIsCreating(false);
 		}
 	}, [onCreateInvite]);
 
 	useEffect(() => {
-		if (invites.length === 0 && !isCreating) {
+		if (invites.length === 0 && !isCreating && !isLoading && !createError) {
 			handleCreateInvite();
 		}
-	}, [invites.length, isCreating, handleCreateInvite]);
+	}, [invites.length, isCreating, isLoading, createError, handleCreateInvite]);
 
-	const handleCopyInviteLink = (token: string) => {
+	const handleCopyInviteLink = async (token: string) => {
 		const link = `${typeof window !== "undefined" ? window.location.origin : ""}/invite/${token}`;
-		navigator.clipboard.writeText(link);
-		setCopied(true);
-		toast.success("Invite link copied to clipboard");
+		try {
+			await navigator.clipboard.writeText(link);
+			setCopied(true);
+			toast.success("Invite link copied to clipboard");
 
-		setTimeout(() => {
-			setCopied(false);
-		}, 2000);
+			setTimeout(() => {
+				setCopied(false);
+			}, 2000);
+		} catch {
+			toast.error("Failed to copy invite link");
+		}
 	};
 
 	const currentInvite = invites[0];
+
+	const getInviteLink = () => {
+		if (createError) {
+			return "Failed to generate invite";
+		}
+		if (isLoading) {
+			return "Loading...";
+		}
+		if (currentInvite) {
+			const origin =
+				typeof window !== "undefined" ? window.location.origin : "";
+			return `${origin}/invite/${currentInvite.token}`;
+		}
+		return "Generating invite link...";
+	};
+
+	const inviteLink = getInviteLink();
 
 	return (
 		<motion.div
@@ -87,38 +111,34 @@ export function TeamsStep({
 					disabled
 					readOnly
 					tabIndex={-1}
-					value={
-						currentInvite
-							? `${typeof window !== "undefined" ? window.location.origin : ""}/invite/${currentInvite.token}`
-							: "Generating invite link..."
-					}
+					value={inviteLink}
 				/>
-				<Button
-					disabled={!currentInvite || copied}
-					onClick={() =>
-						currentInvite && handleCopyInviteLink(currentInvite.token)
-					}
-					size="icon"
-				>
-					{copied ? <IconCircleCheck /> : <IconSquareBehindSquare2 />}
-				</Button>
-			</div>
-
-			<div className="flex flex-col gap-3">
-				<Button className="h-10 w-full" onClick={onNext}>
-					Complete setup
-				</Button>
-
-				{onSkip && (
+				{createError ? (
 					<Button
-						className="h-10 w-full text-muted-foreground"
-						onClick={onSkip}
-						variant="ghost"
+						disabled={isCreating}
+						onClick={handleCreateInvite}
+						size="icon"
+						variant={"secondary"}
 					>
-						Skip for now
+						{isCreating ? "..." : "!"}
+					</Button>
+				) : (
+					<Button
+						disabled={!currentInvite || copied}
+						onClick={() =>
+							currentInvite && handleCopyInviteLink(currentInvite.token)
+						}
+						size="icon"
+						variant={"secondary"}
+					>
+						{copied ? <IconCircleCheck /> : <IconSquareBehindSquare2 />}
 					</Button>
 				)}
 			</div>
+
+			<Button className="h-10 w-full" onClick={onNext}>
+				Complete setup
+			</Button>
 		</motion.div>
 	);
 }

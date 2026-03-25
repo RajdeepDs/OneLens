@@ -1,4 +1,5 @@
 import { account, teamInvite, workspace as workspaceTable } from "@onelens/db";
+import { user } from "@onelens/db/schema/auth";
 import type { RouterClient } from "@orpc/server";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
@@ -152,6 +153,17 @@ export const onboardingRouter = {
 				.where(eq(teamInvite.id, input.inviteId));
 			return { success: true };
 		}),
+
+	completeOnboarding: protectedProcedure.handler(async ({ context }) => {
+		const userId = context.session.user.id;
+
+		await context.db
+			.update(user)
+			.set({ onboardingCompleted: true })
+			.where(eq(user.id, userId));
+
+		return { success: true };
+	}),
 };
 
 export type OnboardingRouter = typeof onboardingRouter;

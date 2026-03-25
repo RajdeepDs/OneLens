@@ -20,6 +20,14 @@ export const auth = betterAuth({
 			clientSecret: env.GITHUB_CLIENT_SECRET,
 		},
 	},
+	user: {
+		additionalFields: {
+			onboardingCompleted: {
+				type: "boolean",
+				defaultValue: false,
+			},
+		},
+	},
 	trustedOrigins: [env.CORS_ORIGIN],
 	secret: env.BETTER_AUTH_SECRET,
 	baseURL: env.BETTER_AUTH_URL,

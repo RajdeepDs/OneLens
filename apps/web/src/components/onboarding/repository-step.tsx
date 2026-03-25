@@ -17,6 +17,7 @@ export interface Repository {
 }
 
 interface RepositoryStepProps {
+	error?: string | null;
 	isLoading?: boolean;
 	onNext: () => void;
 	onSelectionChange: (id: number | null) => void;
@@ -25,6 +26,7 @@ interface RepositoryStepProps {
 }
 
 export function RepositoryStep({
+	error,
 	repositories,
 	isLoading = false,
 	selectedId,
@@ -87,9 +89,13 @@ export function RepositoryStep({
 
 				{!isLoading && filteredRepos.length === 0 && (
 					<div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
-						<p className="text-body-mini-regular text-gray-11">
-							{search ? "No repositories found" : "No repositories available"}
-						</p>
+						{error ? (
+							<p className="text-body-mini-regular text-red-11">{error}</p>
+						) : (
+							<p className="text-body-mini-regular text-gray-11">
+								{search ? "No repositories found" : "No repositories available"}
+							</p>
+						)}
 					</div>
 				)}
 
