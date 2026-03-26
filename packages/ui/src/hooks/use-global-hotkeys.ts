@@ -7,10 +7,10 @@ import {
 } from "react-hotkeys-hook";
 
 export interface GlobalHotkeysProps {
-	keys: Keys;
 	callback: HotkeyCallback;
-	options?: Options & { repeat?: boolean };
 	dependencies?: DependencyList;
+	keys: Keys;
+	options?: Options & { repeat?: boolean };
 }
 
 export function useGlobalHotkeys({
@@ -22,7 +22,9 @@ export function useGlobalHotkeys({
 	useHotkeys(
 		keys,
 		(keyboardEvent, hotkeysEvent) => {
-			if (!repeat && keyboardEvent.repeat) return;
+			if (!repeat && keyboardEvent.repeat) {
+				return;
+			}
 			callback(keyboardEvent, hotkeysEvent);
 		},
 		{

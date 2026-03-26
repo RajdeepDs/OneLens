@@ -8,10 +8,10 @@ import {
 import { useIsTopLayer } from "./use-is-top-layer";
 
 export interface LayeredHotkeysProps {
-	keys: Keys;
 	callback: HotkeyCallback;
-	options?: Options & { repeat?: boolean; skipEscapeWhenDisabled?: boolean };
 	dependencies?: DependencyList;
+	keys: Keys;
+	options?: Options & { repeat?: boolean; skipEscapeWhenDisabled?: boolean };
 }
 
 export function useLayeredHotkeys({
@@ -25,7 +25,9 @@ export function useLayeredHotkeys({
 	useHotkeys(
 		keys,
 		(keyboardEvent, hotkeysEvent) => {
-			if (!repeat && keyboardEvent.repeat) return;
+			if (!repeat && keyboardEvent.repeat) {
+				return;
+			}
 
 			if (
 				skipEscapeWhenDisabled &&

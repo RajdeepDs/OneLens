@@ -7,11 +7,14 @@ import {
 	SidebarGroup,
 	SidebarHeader,
 } from "@onelens/ui/components/sidebar";
+import { WorkspaceSwitcher } from "./workspace-switcher";
 
 export function AppSidebar() {
 	return (
 		<Sidebar className="border-none">
-			<SidebarHeader />
+			<SidebarHeader>
+				<WorkspaceSwitcher />
+			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup />
 			</SidebarContent>

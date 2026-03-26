@@ -23,9 +23,7 @@ function removeLayer(layerId: string): void {
 }
 
 function isTopLayer(layerId: string): boolean {
-	return (
-		layerStack.length === 0 || layerStack[layerStack.length - 1] === layerId
-	);
+	return layerStack.length === 0 || layerStack.at(-1) === layerId;
 }
 
 function notifyListeners(): void {

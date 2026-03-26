@@ -27,9 +27,9 @@ function getShortcutKeySymbol(key: string) {
 }
 
 export interface KeyboardShortcutProps {
-	shortcut: string[] | string;
 	className?: string;
 	keysClassName?: string;
+	shortcut: string[] | string;
 }
 
 export function KeyboardShortcut({
@@ -51,14 +51,14 @@ export function KeyboardShortcut({
 
 					allElements.push(
 						<span
-							key={`shortcut-${shortcutIndex}-key-${keyIndex}`}
 							className={cn(
-								"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 text-xs font-normal leading-none text-foreground",
+								"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 font-normal text-foreground text-xs leading-none",
 								{
 									"font-[emoji]": isEmoji,
 								},
 								keysClassName
 							)}
+							key={`shortcut-${shortcutIndex}-key-${keyIndex}`}
 						>
 							{text}
 						</span>
@@ -68,8 +68,8 @@ export function KeyboardShortcut({
 						const separator = singleShortcut.includes(" then ") ? "then" : "+";
 						allElements.push(
 							<span
+								className="mx-1 text-muted-foreground text-xs"
 								key={`shortcut-${shortcutIndex}-sep-${keyIndex}`}
-								className="mx-1 text-xs text-muted-foreground"
 							>
 								{separator}
 							</span>
@@ -80,8 +80,8 @@ export function KeyboardShortcut({
 				if (shortcutIndex < shortcut.length - 1) {
 					allElements.push(
 						<span
+							className="mx-2 text-muted-foreground text-xs"
 							key={`or-${shortcutIndex}`}
-							className="mx-2 text-xs text-muted-foreground"
 						>
 							or
 						</span>
@@ -92,26 +92,28 @@ export function KeyboardShortcut({
 			return allElements;
 		}
 
-		const parts =
-			shortcut !== "+"
-				? shortcut.includes(" then ")
-					? shortcut.split(" then ")
-					: shortcut.split("+")
-				: ["+"];
+		let parts: string[];
+		if (shortcut === "+") {
+			parts = ["+"];
+		} else if (shortcut.includes(" then ")) {
+			parts = shortcut.split(" then ");
+		} else {
+			parts = shortcut.split("+");
+		}
 
 		return parts.map((key, index) => {
 			const { text, isEmoji } = getShortcutKeySymbol(key.trim());
 
 			return (
 				<span
-					key={`key-${index}`}
 					className={cn(
-						"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 text-xs font-normal leading-none text-foreground",
+						"inline-flex min-w-5 items-center justify-center rounded-md border border-border p-1 font-normal text-foreground text-xs leading-none",
 						{
 							"font-[emoji]": isEmoji,
 						},
 						keysClassName
 					)}
+					key={`key-${index}`}
 				>
 					{text}
 				</span>
