@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure } from "../index";
 import { onboardingRouter } from "./onboarding";
+import { workspaceRouter } from "./workspace";
 
 export const appRouter = {
 	healthCheck: publicProcedure.handler(() => {
@@ -17,7 +18,7 @@ export const appRouter = {
 		};
 	}),
 	joinWaitlist: publicProcedure
-		.input(z.object({ email: z.string().email() }))
+		.input(z.object({ email: z.email() }))
 		.handler(async ({ input, context }) => {
 			const existing = await context.db
 				.select()
@@ -37,6 +38,7 @@ export const appRouter = {
 			return { success: true, message: "You've been added to the waitlist!" };
 		}),
 	...onboardingRouter,
+	...workspaceRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;

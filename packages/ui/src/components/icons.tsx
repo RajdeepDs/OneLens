@@ -51,6 +51,7 @@ export {
 	IconCheckmark1,
 	IconCheckmark2,
 	IconChevronBottom,
+	IconChevronGrabberVertical,
 	IconChevronLeft,
 	IconChevronLeftMedium,
 	IconChevronRight,
