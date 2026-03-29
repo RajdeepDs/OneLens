@@ -12,7 +12,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 	return (
 		<div
 			className={cn(
-				"flex h-screen w-full flex-col overflow-hidden bg-gray-3 px-1.5 py-1.5",
+				"flex h-screen w-full flex-col overflow-hidden bg-gray-3 py-1.5 pr-1.5",
 				{
 					"py-0 pr-0": isMobile,
 				}
