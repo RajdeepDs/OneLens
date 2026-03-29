@@ -11,15 +11,10 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLinkItem,
-	DropdownMenuPortal,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@onelens/ui/components/dropdown-menu";
-import { IconChevronGrabberVertical } from "@onelens/ui/components/icons";
+import { Icon } from "@onelens/ui/components/icons";
 import { Label } from "@onelens/ui/components/label";
 import {
 	SidebarMenu,
@@ -48,33 +43,23 @@ export function WorkspaceSwitcher() {
 									</AvatarFallback>
 								</Avatar>
 								<Label>{workspace?.name || "OneLens"}</Label>
-								<IconChevronGrabberVertical
+								<Icon
 									className="text-gray-11"
+									name="IconChevronGrabberVertical"
 									size={16}
 								/>
 							</SidebarMenuButton>
 						}
 					/>
-					<DropdownMenuContent className={"w-full"}>
+					<DropdownMenuContent className={"w-56"}>
 						<DropdownMenuGroup>
 							<DropdownMenuLinkItem href="/">
+								<Icon name="IconSettingsGear2" variant="filled" />
 								Settings
-								<DropdownMenuShortcut>G then S</DropdownMenuShortcut>
-							</DropdownMenuLinkItem>
-							<DropdownMenuLinkItem>
-								Invite or manage members
 							</DropdownMenuLinkItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuSub>
-								<DropdownMenuSubTrigger>
-									Switch workspace
-								</DropdownMenuSubTrigger>
-								<DropdownMenuPortal>
-									<DropdownMenuSubContent>Hello</DropdownMenuSubContent>
-								</DropdownMenuPortal>
-							</DropdownMenuSub>
 							<DropdownMenuItem>Log out</DropdownMenuItem>
 						</DropdownMenuGroup>
 					</DropdownMenuContent>

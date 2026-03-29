@@ -1,230 +1,22 @@
 export type { CentralIconBaseProps } from "@central-icons-react/round-outlined-radius-3-stroke-1.5";
-export {
-	IconAlignmentCenter,
-	IconAlignmentJustify,
-	IconAlignmentLeft,
-	IconAlignmentRight,
-	IconApple,
-	IconArrowDown,
-	IconArrowLeft,
-	IconArrowRight,
-	IconArrowRotateClockwise,
-	IconArrowRotateCounterClockwise,
-	IconArrowRounded,
-	IconArrowsRepeat,
-	IconArrowUp,
-	IconAudio,
-	IconBackward,
-	IconBag,
-	IconBell,
-	IconBellOff,
-	IconBold,
-	IconBolt,
-	IconBrackets1,
-	IconBrackets2,
-	IconBrain,
-	IconBrain1,
-	IconBrain2,
-	IconBrokenChainLink1,
-	IconBronceMedal,
-	IconBrush,
-	IconBug,
-	IconBuildingBlocks,
-	IconBuildings,
-	IconCalendar1,
-	IconCalendarCheck,
-	IconCamera1,
-	IconCamera2,
-	IconCameraOff,
-	IconChainLink1,
-	IconChainLink2,
-	IconChart1,
-	IconChart2,
-	IconChart3,
-	IconChart4,
-	IconChart5,
-	IconChart6,
-	IconChart7,
-	IconChartWaterfall,
-	IconCheckCircle2,
-	IconCheckCircle2Dashed,
-	IconCheckmark1,
-	IconCheckmark2,
-	IconChevronBottom,
-	IconChevronGrabberVertical,
-	IconChevronLeft,
-	IconChevronLeftMedium,
-	IconChevronRight,
-	IconChevronRightMedium,
-	IconChevronTop,
-	IconChevronTopMedium,
-	IconChip,
-	IconChipSimple,
-	IconCircleCheck,
-	IconCircleDashed,
-	IconCircleDotsCenter1,
-	IconCircleInfo,
-	IconCircleMinus,
-	IconCirclePlus,
-	IconCircleQuestionmark,
-	IconCircleX,
-	IconClipboard,
-	IconClipboard2,
-	IconClipboard2Sparkle,
-	IconClock,
-	IconClockSnooze,
-	IconCloud,
-	IconCloudCheck,
-	IconCloudDownload,
-	IconCloudUpload,
-	IconCode,
-	IconCodeLarge,
-	IconCodeLines,
-	IconCodeMedium,
-	IconCoin1,
-	IconCoin2,
-	IconConsoleSimple,
-	IconConsoleSimple1,
-	IconConsoleSparkle,
-	IconCreditCard1,
-	IconCreditCard2,
-	IconCrown,
-	IconCurrencyDollar,
-	IconDashboardFast,
-	IconDashboardLow,
-	IconDashboardMiddle,
-	IconEditBig,
-	IconEditSmall1,
-	IconEditSmall2,
-	IconEmail1,
-	IconEmail2,
-	IconEraser,
-	IconEyeOpen,
-	IconEyeSlash,
-	IconEyeSlash2,
-	IconFileDownload,
-	IconFiles,
-	IconFilter1,
-	IconFilter2,
-	IconFilterAscending,
-	IconFilterDescending,
-	IconFire1,
-	IconFire2,
-	IconFire3,
-	IconFolder1,
-	IconFolder2,
-	IconFolderUpload,
-	IconGift1,
-	IconGift2,
-	IconGiftBox,
-	IconGithub,
-	IconGlobe,
-	IconGlobe2,
-	IconGoldMedal,
-	IconGoogle,
-	IconH1,
-	IconH2,
-	IconH3,
-	IconHammer,
-	IconHammer2,
-	IconHeart,
-	IconHeart2,
-	IconHome,
-	IconImageSparkle,
-	IconImages1,
-	IconImages2,
-	IconItalic,
-	IconLayoutDashboard,
-	IconLayoutGrid1,
-	IconLayoutGrid2,
-	IconLightBulb,
-	IconLightBulbSimple,
-	IconLightbulbSparkle,
-	IconLoader,
-	IconLock,
-	IconMagicWand,
-	IconMagicWand2,
-	IconMagnifyingGlass,
-	IconMagnifyingGlass2,
-	IconMedal,
-	IconMicrophone,
-	IconMicrophoneOff,
-	IconMinusSmall,
-	IconMoon,
-	IconMute,
-	IconNoFlash,
-	IconPageText,
-	IconPause,
-	IconPencil,
-	IconPencil2,
-	IconPencil3,
-	IconPeople,
-	IconPeopleCircle,
-	IconPercent,
-	IconPhone,
-	IconPieChart1,
-	IconPieChart2,
-	IconPlay,
-	IconPlusLarge,
-	IconPlusSmall,
-	IconRepeat,
-	IconRocket,
-	IconServer,
-	IconServer1,
-	IconServer2,
-	IconSettingsGear1,
-	IconSettingsGear2,
-	IconShoppingBag1,
-	IconShoppingBag2,
-	IconSidebar,
-	IconSidebarFloating,
-	IconSilverMedal,
-	IconSkip,
-	IconSparkle,
-	IconSparkle2,
-	IconSquareArrowTopRight,
-	IconSquareBehindSquare2,
-	IconStar,
-	IconStepBack,
-	IconStepForwards,
-	IconStop,
-	IconStorage,
-	IconSun,
-	IconTag,
-	IconTarget,
-	IconTarget1,
-	IconTarget2,
-	IconToolbox,
-	IconTranslate,
-	IconTrashCan,
-	IconTrashCanSimple,
-	IconTrending1,
-	IconTrending2,
-	IconTrending3,
-	IconTrending4,
-	IconTrending5,
-	IconTrophy,
-	IconTwitter,
-	IconUnderline,
-	IconUnlocked,
-	IconUser,
-	IconVideo,
-	IconVideoOff,
-	IconVideoOn,
-	IconVolumeFull,
-	IconVolumeOff,
-	IconWallet1,
-	IconWarningSign,
-	IconX,
-	IconZap,
-} from "@central-icons-react/round-outlined-radius-3-stroke-1.5";
 
+import * as FilledIcons from "@central-icons-react/round-filled-radius-3-stroke-1.5";
 import type { CentralIconBaseProps } from "@central-icons-react/round-outlined-radius-3-stroke-1.5";
+import * as OutlineIcons from "@central-icons-react/round-outlined-radius-3-stroke-1.5";
 import { cn } from "@onelens/ui/lib/utils";
 import type { ComponentType, FC, SVGAttributes, SVGProps } from "react";
 
+// Extract all icon names from OutlineIcons for type-safe autocomplete
+export type IconName = Exclude<
+	keyof typeof OutlineIcons,
+	"CentralIconBaseProps"
+>;
+
+export type IconVariant = "outline" | "filled";
+
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
+	variant?: IconVariant;
 }
 
 const sizeMap = {
@@ -246,11 +38,41 @@ function getSizeValue(size: IconProps["size"]): string | number | undefined {
 	return sizeMap[size];
 }
 
+export interface DualVariantIconProps extends IconProps {
+	variant?: IconVariant;
+}
+
+interface IconComponentRegistry {
+	filled?: ComponentType<CentralIconBaseProps>;
+	outline: ComponentType<CentralIconBaseProps>;
+}
+
 export const createIcon = (
-	IconComponent: ComponentType<CentralIconBaseProps>
+	IconComponent: ComponentType<CentralIconBaseProps> | IconComponentRegistry
 ) => {
-	const IconWrapper: FC<IconProps> = ({ size, className, ...props }) => {
+	const isRegistry =
+		typeof IconComponent === "object" && "outline" in IconComponent;
+
+	const outlineComponent = isRegistry
+		? (IconComponent as IconComponentRegistry).outline
+		: (IconComponent as ComponentType<CentralIconBaseProps>);
+
+	const filledComponent = isRegistry
+		? (IconComponent as IconComponentRegistry).filled
+		: undefined;
+
+	const IconWrapper: FC<DualVariantIconProps> = ({
+		size,
+		variant = "outline",
+		className,
+		...props
+	}) => {
 		const resolvedSize = getSizeValue(size);
+
+		const SelectedComponent =
+			variant === "filled" && filledComponent
+				? filledComponent
+				: outlineComponent;
 
 		return (
 			<span
@@ -260,19 +82,105 @@ export const createIcon = (
 					className
 				)}
 			>
-				<IconComponent size={resolvedSize} {...props} />
+				<SelectedComponent size={resolvedSize} {...props} />
 			</span>
 		);
 	};
 
 	const componentName =
-		IconComponent.displayName ||
-		(IconComponent as { name?: string }).name ||
-		"Icon";
+		(isRegistry
+			? outlineComponent.displayName ||
+				(outlineComponent as { name?: string }).name
+			: IconComponent.displayName ||
+				(IconComponent as { name?: string }).name) || "Icon";
 	IconWrapper.displayName = componentName;
 
 	return IconWrapper;
 };
+
+export interface UnifiedIconProps extends DualVariantIconProps {
+	/**
+	 * The icon name exactly as exported from the icon packages.
+	 * e.g. "IconHeart", "IconStar", "IconSettingsGear2"
+	 *
+	 * @example
+	 * <Icon name="IconHeart" variant="outline" size="md" />
+	 */
+	name: IconName;
+}
+
+export const Icon: FC<UnifiedIconProps> = ({
+	name,
+	variant = "outline",
+	size,
+	className,
+	...props
+}) => {
+	const resolvedSize = getSizeValue(size);
+
+	// Pick the right module based on variant, fall back to outline if filled not found
+	const filledCandidate = (
+		FilledIcons as unknown as Record<
+			string,
+			ComponentType<CentralIconBaseProps>
+		>
+	)[name];
+	const outlineCandidate = (
+		OutlineIcons as unknown as Record<
+			string,
+			ComponentType<CentralIconBaseProps>
+		>
+	)[name];
+
+	const SelectedComponent =
+		variant === "filled" && filledCandidate
+			? filledCandidate
+			: outlineCandidate;
+
+	if (!SelectedComponent) {
+		console.warn(`[Icon] "${name}" not found in outline or filled modules.`);
+		return null;
+	}
+
+	return (
+		<span
+			aria-hidden={props["aria-hidden"] ?? true}
+			className={cn(
+				"inline-flex shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none",
+				className
+			)}
+		>
+			<SelectedComponent size={resolvedSize} {...props} />
+		</span>
+	);
+};
+
+Icon.displayName = "Icon";
+
+export function createWrappedIcon(
+	iconName: string,
+	options?: {
+		outlinedModule?: Record<string, ComponentType<CentralIconBaseProps>>;
+		filledModule?: Record<string, ComponentType<CentralIconBaseProps>>;
+	}
+): ReturnType<typeof createIcon> | null {
+	const outlinedModule = options?.outlinedModule;
+	const filledModule = options?.filledModule;
+
+	const outlined = outlinedModule ? outlinedModule[iconName] : null;
+
+	if (!outlined) {
+		console.warn(`Icon "${iconName}" not found in outlined module`);
+		return null;
+	}
+
+	const filled = filledModule ? filledModule[iconName] : undefined;
+
+	return createIcon({
+		outline: outlined,
+		filled,
+	});
+}
 
 const GitHub = (props: SVGProps<SVGSVGElement>) => (
 	<svg
@@ -291,5 +199,14 @@ const GitHub = (props: SVGProps<SVGSVGElement>) => (
 		/>
 	</svg>
 );
+
+// Re-export commonly used icons for convenience
+export const IconLoader = (
+	OutlineIcons as unknown as Record<string, ComponentType<CentralIconBaseProps>>
+).IconLoader;
+
+export const IconMagnifyingGlass = (
+	OutlineIcons as unknown as Record<string, ComponentType<CentralIconBaseProps>>
+).IconMagnifyingGlass;
 
 export { GitHub };
