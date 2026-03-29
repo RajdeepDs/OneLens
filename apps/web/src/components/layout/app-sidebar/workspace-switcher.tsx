@@ -23,6 +23,8 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	SidebarTrigger,
+	useSidebar,
 } from "@onelens/ui/components/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -31,6 +33,7 @@ import { orpc } from "@/utils/orpc";
 
 export function WorkspaceSwitcher() {
 	const router = useRouter();
+	const isMobile = useSidebar();
 	const { data: session } = authClient.useSession();
 	const { data: workspace } = useQuery(
 		orpc.getCurrentWorkspace.queryOptions({ input: { slug: "one-lens" } })
@@ -43,7 +46,7 @@ export function WorkspaceSwitcher() {
 
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem>
+			<SidebarMenuItem className="flex items-center justify-between">
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						render={
@@ -96,6 +99,7 @@ export function WorkspaceSwitcher() {
 						</DropdownMenuGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>
+				{isMobile && <SidebarTrigger isMobile={!!isMobile} />}
 			</SidebarMenuItem>
 		</SidebarMenu>
 	);

@@ -21,8 +21,8 @@ import {
 import { useIsMobile } from "@onelens/ui/hooks/use-mobile";
 import { cn } from "@onelens/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
 import * as React from "react";
+import { Icon } from "./icons";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -254,8 +254,9 @@ function Sidebar({
 function SidebarTrigger({
 	className,
 	onClick,
+	isMobile,
 	...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button> & { isMobile?: boolean }) {
 	const { toggleSidebar } = useSidebar();
 
 	return (
@@ -271,7 +272,10 @@ function SidebarTrigger({
 			variant="ghost"
 			{...props}
 		>
-			<PanelLeftIcon />
+			<Icon
+				name="IconSidebarSimpleLeftWide"
+				variant={isMobile ? "filled" : "outline"}
+			/>
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	);

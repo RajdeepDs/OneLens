@@ -12,7 +12,7 @@ import { WorkspaceSwitcher } from "./workspace-switcher";
 export function AppSidebar() {
 	return (
 		<Sidebar className="border-none">
-			<SidebarHeader>
+			<SidebarHeader className="flex w-full items-center justify-between">
 				<WorkspaceSwitcher />
 			</SidebarHeader>
 			<SidebarContent>
