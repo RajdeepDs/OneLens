@@ -1,10 +1,7 @@
 "use client";
 
 import { Button } from "@onelens/ui/components/button";
-import {
-	IconCircleCheck,
-	IconSquareBehindSquare2,
-} from "@onelens/ui/components/icons";
+import { Icon } from "@onelens/ui/components/icons";
 import { Input } from "@onelens/ui/components/input";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
@@ -131,7 +128,11 @@ export function TeamsStep({
 						size="icon"
 						variant={"secondary"}
 					>
-						{copied ? <IconCircleCheck /> : <IconSquareBehindSquare2 />}
+						{copied ? (
+							<Icon name="IconCircleCheck" />
+						) : (
+							<Icon name="IconSquareBehindSquare2" />
+						)}
 					</Button>
 				)}
 			</div>

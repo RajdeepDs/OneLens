@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "iconLibrary": "lucide",
-  "menuColor": "inverted-translucent",
+  "menuColor": "default-translucent",
   "menuAccent": "subtle",
   "aliases": {
     "components": "@onelens/ui/components",

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@onelens/ui/components/button";
-import { IconChevronLeftMedium } from "@onelens/ui/components/icons";
+import { Icon } from "@onelens/ui/components/icons";
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useGitHubRepos, useOnboarding } from "@/hooks";
@@ -98,7 +98,7 @@ export function WelcomeClient() {
 			<div className="flex w-full items-center justify-between">
 				{canGoBack ? (
 					<Button onClick={goBack} variant="ghost">
-						<IconChevronLeftMedium />
+						<Icon name="IconChevronLeftMedium" />
 						Back
 					</Button>
 				) : (

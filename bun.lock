@@ -139,6 +139,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@base-ui/react": "^1.0.0",
+        "@central-icons-react/round-filled-radius-3-stroke-1.5": "^1.1.174",
         "@central-icons-react/round-outlined-radius-3-stroke-1.5": "^1.1.173",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -285,6 +286,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.4.5", "", { "os": "win32", "cpu": "x64" }, "sha512-Pmhv9zT95YzECfjEHNl3mN9Vhusw9VA5KHY0ZvlGsxsjwS5cb7vpRnHzJIv0vG7jB0JI7xEaMH9ddfZm/RozBw=="],
 
     "@central-icons-react/all": ["@central-icons-react/all@1.1.173", "", { "peerDependencies": { "react": ">=14.0.0 <= 19" } }, "sha512-MUEmFJk2jmtu6XHbdJwGYr5Ln7RY+s9h9hdJsJ4ALPww1RPXRRob5bxmIqMiHpkbtldUoBLWeYLVjSu8IW0XKQ=="],
+
+    "@central-icons-react/round-filled-radius-3-stroke-1.5": ["@central-icons-react/round-filled-radius-3-stroke-1.5@1.1.174", "", { "peerDependencies": { "react": ">=14.0.0 <= 19" } }, "sha512-IRKrMmjjVDh7yx4nSaZKRUNGIZTA6Adbupbvko3YlavIuqQ2WGkbkF6bHoPJcnJmEQFy8cICA/a2faVdkgLmWg=="],
 
     "@central-icons-react/round-outlined-radius-3-stroke-1.5": ["@central-icons-react/round-outlined-radius-3-stroke-1.5@1.1.173", "", { "peerDependencies": { "react": ">=14.0.0 <= 19" } }, "sha512-ylYnuVaQoXEthQe1KvPpF9r7etWyTqF//Lcb5RZmC4FUoSNCaT8hRi+8IBxcaOqjaUQHHdPU/6qm9+mL86yYyg=="],
 
