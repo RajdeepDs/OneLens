@@ -407,6 +407,7 @@ function SidebarGroupLabel({
 					"flex h-8 shrink-0 items-center rounded-md px-2 font-medium text-sidebar-foreground/70 text-xs outline-hidden ring-sidebar-ring transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 [&>svg]:size-4 [&>svg]:shrink-0",
 					className
 				),
+				suppressHydrationWarning: true,
 			},
 			props
 		),
@@ -431,6 +432,7 @@ function SidebarGroupAction({
 					"absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-hidden ring-sidebar-ring transition-transform after:absolute after:-inset-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 group-data-[collapsible=icon]:hidden md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
 					className
 				),
+				suppressHydrationWarning: true,
 			},
 			props
 		),
@@ -519,6 +521,7 @@ function SidebarMenuButton({
 		props: mergeProps<"button">(
 			{
 				className: cn(sidebarMenuButtonVariants({ variant, size }), className),
+				suppressHydrationWarning: true,
 			},
 			props
 		),
@@ -573,6 +576,7 @@ function SidebarMenuAction({
 						"group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 aria-expanded:opacity-100 peer-data-active/menu-button:text-sidebar-accent-foreground md:opacity-0",
 					className
 				),
+				suppressHydrationWarning: true,
 			},
 			props
 		),
@@ -686,6 +690,7 @@ function SidebarMenuSubButton({
 					"flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-hidden ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:bg-sidebar-accent data-[size=md]:text-body-small-spaced data-[size=sm]:text-xs data-active:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
 					className
 				),
+				suppressHydrationWarning: true,
 			},
 			props
 		),

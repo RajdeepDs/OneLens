@@ -1,3 +1,4 @@
 export { default as Footer } from "./footer";
 export { default as Header } from "./header";
+export { PageHeader } from "./page-header";
 export { ScrollableContainer } from "./scrollable-container";
