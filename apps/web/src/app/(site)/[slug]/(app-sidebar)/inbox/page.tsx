@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { PageHeader } from "@/components/layout";
 import { QueueGroup } from "@/components/ui/queue-group";
 import { INBOX_FIXTURE, type PR } from "@/configs/dummy-data-pr";
 
-export default function InboxPage() {
-	const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
-	const { yourQueue, mergeReady, needsChanges, merged } = INBOX_FIXTURE;
-
-	// Transform fixture data to match QueueGroup item format
-	const transformItem = (item: PR) => ({
+function transformItem(item: PR) {
+	return {
 		id: item.displayId,
 		title: item.title,
 		repo: item.repo,
@@ -26,47 +22,62 @@ export default function InboxPage() {
 			"deploy" in item && item.deploy
 				? { duration: item.deploy.duration, state: item.deploy.state }
 				: undefined,
-	});
-
-	const handleItemSelect = (itemId: string) => {
-		const newSelected = new Set(selectedItems);
-		if (newSelected.has(itemId)) {
-			newSelected.delete(itemId);
-		} else {
-			newSelected.add(itemId);
-		}
-		setSelectedItems(newSelected);
 	};
+}
+
+const MemoizedQueueGroup = memo(QueueGroup);
+
+export default function InboxPage() {
+	const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+	const { yourQueue, mergeReady, needsChanges, merged } = INBOX_FIXTURE;
+
+	const yourQueueItems = yourQueue.map(transformItem);
+	const mergeReadyItems = mergeReady.map(transformItem);
+	const needsChangesItems = needsChanges.map(transformItem);
+	const mergedItems = merged.map(transformItem);
+
+	const handleItemSelect = useCallback((itemId: string) => {
+		setSelectedItems((prev) => {
+			if (prev.has(itemId)) {
+				const next = new Set(prev);
+				next.delete(itemId);
+				return next;
+			}
+			const next = new Set(prev);
+			next.add(itemId);
+			return next;
+		});
+	}, []);
 
 	return (
 		<>
 			<PageHeader title="Inbox" />
 			<main className="mt-3 px-2">
 				<div className="space-y-1">
-					<QueueGroup
+					<MemoizedQueueGroup
 						defaultOpen={true}
-						items={yourQueue.map(transformItem)}
+						items={yourQueueItems}
 						onItemSelect={handleItemSelect}
 						selectedItems={selectedItems}
 						title="Your Queue"
 					/>
-					<QueueGroup
+					<MemoizedQueueGroup
 						defaultOpen={true}
-						items={mergeReady.map(transformItem)}
+						items={mergeReadyItems}
 						onItemSelect={handleItemSelect}
 						selectedItems={selectedItems}
 						title="Ready to Merge"
 					/>
-					<QueueGroup
+					<MemoizedQueueGroup
 						defaultOpen={false}
-						items={needsChanges.map(transformItem)}
+						items={needsChangesItems}
 						onItemSelect={handleItemSelect}
 						selectedItems={selectedItems}
 						title="Needs Changes"
 					/>
-					<QueueGroup
+					<MemoizedQueueGroup
 						defaultOpen={false}
-						items={merged.map(transformItem)}
+						items={mergedItems}
 						onItemSelect={handleItemSelect}
 						selectedItems={selectedItems}
 						title="Merged"
