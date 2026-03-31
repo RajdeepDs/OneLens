@@ -6,6 +6,8 @@ import { QueueGroup } from "@/components/ui/queue-group";
 import { INBOX_FIXTURE, type PR } from "@/configs/dummy-data-pr";
 
 function transformItem(item: PR) {
+	const reviewerInfo = getReviewerInfo(item);
+
 	return {
 		id: item.displayId,
 		title: item.title,
@@ -22,7 +24,62 @@ function transformItem(item: PR) {
 			"deploy" in item && item.deploy
 				? { duration: item.deploy.duration, state: item.deploy.state }
 				: undefined,
+		reviewers: reviewerInfo,
 	};
+}
+
+const SPLIT_CAMEL_CASE = /([A-Z])/g;
+
+function getReviewerInfo(item: PR) {
+	const status = item.status;
+	const suggestedReviewer = item.ai?.suggestedReviewer;
+
+	if (status === "merge_ready") {
+		return [
+			{
+				avatarUrl: null,
+				initials: "SC",
+				ringColor: "green" as const,
+			},
+			{
+				avatarUrl: null,
+				initials: "AK",
+				ringColor: "green" as const,
+			},
+		];
+	}
+
+	if (status === "changes_requested") {
+		return [
+			{
+				avatarUrl: null,
+				initials: "RN",
+				ringColor: "red" as const,
+			},
+		];
+	}
+
+	if (status === "open") {
+		if (suggestedReviewer) {
+			const initials = suggestedReviewer
+				.split(SPLIT_CAMEL_CASE)
+				.filter(Boolean)
+				.map((n) => n[0])
+				.join("")
+				.toUpperCase()
+				.slice(0, 2);
+			return [
+				{
+					avatarUrl: null,
+					initials: initials || suggestedReviewer.slice(0, 2).toUpperCase(),
+					ringColor: "yellow" as const,
+				},
+			];
+		}
+		return [];
+	}
+
+	return [];
 }
 
 const MemoizedQueueGroup = memo(QueueGroup);
