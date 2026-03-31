@@ -12,6 +12,8 @@ import type { IconName } from "@onelens/ui/components/icons";
 import { Icon } from "@onelens/ui/components/icons";
 import { Kbd } from "@onelens/ui/components/kbd";
 import { cn } from "@onelens/ui/lib/utils";
+import type { Route } from "next";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import type { ComponentPropsWithoutRef } from "react";
 import { memo, useCallback, useMemo, useState } from "react";
@@ -79,6 +81,7 @@ export interface QueueGroupItem {
 	id: string;
 	inboxSummary?: string;
 	mergedAt?: string;
+	prId: string;
 	repo: string;
 	reviewers: QueueGroupItemReviewer[];
 	risk: string;
@@ -116,70 +119,78 @@ const QueueItem = memo(function QueueItem({
 	return (
 		<div className="queue-group-item flex cursor-pointer items-center gap-4.5 rounded-md px-3.5 py-3 transition-[background-color,transform] duration-200">
 			<Checkbox checked={isSelected} onCheckedChange={handleCheckedChange} />
-			<div className="w-12 shrink-0">
-				<p className="select-none text-body-small-spaced text-muted-foreground">
-					{item.id}
-				</p>
-			</div>
-			<div className="max-w-72 flex-1">
-				<p className="select-none truncate text-body-small-medium text-foreground">
-					{item.title}
-				</p>
-			</div>
-			<div className="min-w-0 flex-1">
-				<p className="select-none truncate text-body-small-regular text-muted-foreground">
-					{item.inboxSummary}
-				</p>
-			</div>
-			<div className="flex shrink-0 items-center gap-3">
-				{ciStatus && (
-					<Badge className="flex h-6 items-center gap-1.5" variant={"outline"}>
-						<div className={cn("size-2 rounded-full", ciStatus.dotColor)} />
-						<span className="text-body-small-regular text-gray-11 capitalize">
-							{ciStatus.label}
-						</span>
-					</Badge>
-				)}
-				<div className="flex items-center gap-1.5">
-					{hasReviewers ? (
-						<div className="flex -space-x-1.5">
-							{item.reviewers.map((reviewer, index) => (
-								<div
-									className={cn(
-										"flex h-6 w-6 items-center justify-center rounded-full border-2 bg-muted font-medium text-[10px]",
-										reviewer.ringColor === "green" && "border-emerald-500",
-										reviewer.ringColor === "yellow" && "border-amber-500",
-										reviewer.ringColor === "red" && "border-red-500"
-									)}
-									key={index}
-								>
-									{reviewer.initials}
-								</div>
-							))}
-						</div>
-					) : (
-						<div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-muted-foreground/30 border-dashed">
-							<svg
-								aria-label="Add reviewer"
-								className="h-3 w-3 text-muted-foreground/50"
-								fill="none"
-								viewBox="0 0 12 12"
-							>
-								<path
-									d="M6 2v8M2 6h8"
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeWidth="1.5"
-								/>
-							</svg>
-						</div>
-					)}
+			<Link
+				className="flex flex-1 items-center gap-4.5"
+				href={`pr/${item.prId}` as Route}
+			>
+				<div className="w-12 shrink-0">
+					<p className="select-none text-body-small-spaced text-muted-foreground">
+						{item.id}
+					</p>
 				</div>
+				<div className="max-w-72 flex-1">
+					<p className="select-none truncate text-body-small-medium text-foreground">
+						{item.title}
+					</p>
+				</div>
+				<div className="min-w-0 flex-1">
+					<p className="select-none truncate text-body-small-regular text-muted-foreground">
+						{item.inboxSummary}
+					</p>
+				</div>
+				<div className="flex shrink-0 items-center gap-3">
+					{ciStatus && (
+						<Badge
+							className="flex h-6 items-center gap-1.5"
+							variant={"outline"}
+						>
+							<div className={cn("size-2 rounded-full", ciStatus.dotColor)} />
+							<span className="text-body-small-regular text-gray-11 capitalize">
+								{ciStatus.label}
+							</span>
+						</Badge>
+					)}
+					<div className="flex items-center gap-1.5">
+						{hasReviewers ? (
+							<div className="flex -space-x-1.5">
+								{item.reviewers.map((reviewer, index) => (
+									<div
+										className={cn(
+											"flex h-6 w-6 items-center justify-center rounded-full border-2 bg-muted font-medium text-[10px]",
+											reviewer.ringColor === "green" && "border-emerald-500",
+											reviewer.ringColor === "yellow" && "border-amber-500",
+											reviewer.ringColor === "red" && "border-red-500"
+										)}
+										key={index}
+									>
+										{reviewer.initials}
+									</div>
+								))}
+							</div>
+						) : (
+							<div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-muted-foreground/30 border-dashed">
+								<svg
+									aria-label="Add reviewer"
+									className="h-3 w-3 text-muted-foreground/50"
+									fill="none"
+									viewBox="0 0 12 12"
+								>
+									<path
+										d="M6 2v8M2 6h8"
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeWidth="1.5"
+									/>
+								</svg>
+							</div>
+						)}
+					</div>
 
-				<p className="min-w-8 select-none whitespace-nowrap text-right text-body-small-regular text-muted-foreground">
-					{item.time}
-				</p>
-			</div>
+					<p className="min-w-8 select-none whitespace-nowrap text-right text-body-small-regular text-muted-foreground">
+						{item.time}
+					</p>
+				</div>
+			</Link>
 		</div>
 	);
 });

@@ -10,6 +10,7 @@ function transformItem(item: PR) {
 
 	return {
 		id: item.displayId,
+		prId: item.id,
 		title: item.title,
 		repo: item.repo,
 		author: item.author.name,
