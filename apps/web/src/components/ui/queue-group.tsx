@@ -25,6 +25,7 @@ interface QueueGroupProps extends ComponentPropsWithoutRef<"div"> {
 		risk: string;
 		time?: string;
 		mergedAt?: string;
+		inboxSummary?: string;
 		ci?: {
 			reason: string;
 			state: string;
@@ -151,21 +152,14 @@ export function QueueGroup({
 			<CollapsibleContent className="queue-group-content">
 				<div className="space-y-0">
 					{items.length > 0 ? (
-						items.map((item, index) => {
-							const displayText =
-								item.ci?.reason ||
-								item.blockingReason ||
-								item.deploy?.duration ||
-								"—";
-							const timeText = item.time || item.mergedAt || "—";
+						items.map((item) => {
+							const displayText = item.inboxSummary;
+							const timeText = item.time;
 
 							return (
 								<div
 									className="queue-group-item flex cursor-pointer items-center gap-4.5 rounded-md px-3.5 py-3 transition-[background-color,transform] duration-200"
 									key={item.id}
-									style={{
-										animationDelay: `${index * 40}ms`,
-									}}
 								>
 									<Checkbox
 										checked={selectedItems.has(item.id)}
