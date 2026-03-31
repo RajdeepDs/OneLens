@@ -75,8 +75,26 @@ export function QueueGroup({
 		return colorMap[groupTitle] || "text-gray-11";
 	};
 
+	const getGradientStyle = (groupTitle: string): string => {
+		const gradientMap: Record<string, string> = {
+			"Attention Required":
+				"linear-gradient(90deg, lch(66.74 0.241 27.94) 0%, lch(95.94 0.5 282) 100%), lch(95.94 0.5 282)",
+			"Ready to Merge":
+				"linear-gradient(90deg, lch(96.024 3.659 136.2) 0%, lch(95.94 0.5 282) 100%), lch(95.94 0.5 282)",
+			"Needs Changes":
+				"linear-gradient(90deg, lch(96.024 0.825 69.481) 0%, lch(95.94 0.5 282) 100%), lch(95.94 0.5 282)",
+			Merged:
+				"linear-gradient(90deg, lch(96.024 3.659 282.977) 0%, lch(95.94 0.5 282) 100%), lch(95.94 0.5 282)",
+		};
+		return (
+			gradientMap[groupTitle] ||
+			"linear-gradient(90deg, lch(95.94 0.5 282) 0%, lch(95.94 0.5 282) 100%), lch(95.94 0.5 282)"
+		);
+	};
+
 	const iconName = getIconName(title);
 	const iconColor = getIconColor(title);
+	const gradientStyle = getGradientStyle(title);
 
 	return (
 		<Collapsible
@@ -86,36 +104,54 @@ export function QueueGroup({
 			{...props}
 		>
 			<CollapsibleTrigger
-				className="flex w-full items-center gap-3 rounded-md bg-alpha-1 px-2 py-1"
+				className="queue-group-trigger relative flex w-full items-center gap-3 overflow-hidden rounded-md px-2 py-1.5"
 				nativeButton={false}
 				render={
-					<div>
+					<div className="relative z-10">
 						<Button
-							className={cn(isOpen ? "" : "-rotate-90", "group")}
+							className={cn(
+								"queue-group-chevron group",
+								isOpen ? "" : "-rotate-90"
+							)}
 							size={"icon-sm"}
 							variant={"link"}
 						>
 							<Icon
-								className="text-gray-11 group-hover:text-gray-12"
+								className="queue-group-icon text-gray-11 group-hover:text-gray-12"
 								name="IconChevronTriangleDownSmall"
 								variant="filled"
 							/>
 						</Button>
 						<div className="flex items-center gap-3">
-							<Icon className={iconColor} name={iconName} variant="filled" />
-							<span className="select-none text-body-small-medium text-gray-11 uppercase">
+							<Icon
+								className={cn(
+									"queue-group-icon transition-colors duration-200",
+									iconColor
+								)}
+								name={iconName}
+								variant="filled"
+							/>
+							<span className="select-none font-medium text-gray-12 text-xs uppercase tracking-wider">
 								{title}
 							</span>
-							<Kbd>{items.length}</Kbd>
+							<Kbd
+								className="tabular-numbers"
+								style={{ fontVariantNumeric: "tabular-nums" }}
+							>
+								{items.length}
+							</Kbd>
 						</div>
 					</div>
 				}
+				style={{
+					background: gradientStyle,
+				}}
 			/>
 
-			<CollapsibleContent>
+			<CollapsibleContent className="queue-group-content">
 				<div className="space-y-0">
 					{items.length > 0 ? (
-						items.map((item) => {
+						items.map((item, index) => {
 							const displayText =
 								item.ci?.reason ||
 								item.blockingReason ||
@@ -125,8 +161,11 @@ export function QueueGroup({
 
 							return (
 								<div
-									className="flex cursor-pointer items-center gap-4.5 rounded-md border-alpha-1 px-3.5 py-3 transition-colors hover:bg-alpha-1/50"
+									className="queue-group-item flex cursor-pointer items-center gap-4.5 rounded-md px-3.5 py-3 transition-[background-color,transform] duration-200"
 									key={item.id}
+									style={{
+										animationDelay: `${index * 40}ms`,
+									}}
 								>
 									<Checkbox
 										checked={selectedItems.has(item.id)}
@@ -156,8 +195,8 @@ export function QueueGroup({
 							);
 						})
 					) : (
-						<div className="py-8 text-center">
-							<p className="text-muted-foreground">No items</p>
+						<div className="py-8 text-center opacity-60 transition-opacity duration-200">
+							<p className="text-muted-foreground text-sm">No items</p>
 						</div>
 					)}
 				</div>

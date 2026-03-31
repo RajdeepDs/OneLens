@@ -26,8 +26,8 @@ export default function InboxPage() {
 	return (
 		<>
 			<PageHeader title="Inbox" />
-			<main className="mt-2 px-2">
-				<div className="space-y-0.5">
+			<main className="mt-3 px-2">
+				<div className="space-y-1">
 					<QueueGroup
 						defaultOpen={true}
 						items={[...yourQueue]}
